@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import styles from './styles.module.scss';
+import { getInitials } from '../utils/auth';
 
 
 const BaseLayout = ({ children }) => {
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -19,7 +37,22 @@ const BaseLayout = ({ children }) => {
             <>
               <Link to="/polls" className={styles.navLink}>Create Poll</Link>
               <Link to="/surveys" className={styles.navLink}>Create Survey</Link>
-              <Link to="/admin" className={styles.navLink}>Dashboard</Link>
+
+              <div className={styles.userMenu} ref={dropdownRef}>
+                <div className={styles.userIcon} onClick={toggleDropdown}>
+                  {getInitials(user)}
+                </div>
+                {isDropdownOpen && (
+                  <div className={styles.dropdownMenu}>
+                    <Link to="/settings" className={styles.dropdownItem}>Settings</Link>
+                    <Link to="/dashboard" className={styles.dropdownItem}>Dashboard</Link>
+                    <Link to="/login" className={styles.dropdownItem} onClick={() => {
+                      logout()
+                      setDropdownOpen(false)
+                    }}>Logout</Link>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>

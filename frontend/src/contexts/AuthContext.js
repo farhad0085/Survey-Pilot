@@ -9,37 +9,25 @@ const tokenKey = process.env.REACT_APP_AUTH_TOKEN_KEY
 export const AuthProvider = ({ children }) => {
    // initially get the state from localStorage
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem(tokenKey));
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   const register = async (data) => {
-    try {
-      const response = await registerUser(data);
-      setIsAuthenticated(true);
-      setUser(response.data);
-      localStorage.setItem(tokenKey, response.data.key)
-    } catch (error) {
-      console.error('Registration failed:', error);
-    }
+    const response = await registerUser(data);
+    setIsAuthenticated(true);
+    setUser(response.data);
+    localStorage.setItem(tokenKey, response.data.key)
   };
 
   const loadUserInfo = async () => {
-    try {
-      const response = await userInfo();
-      setUser(response.data);
-    } catch (error) {
-      console.error('Loading user data failed:', error);
-    }
+    const response = await userInfo();
+    setUser(response.data);
   }
 
   const login = async (username, password) => {
-    try {
-      const response = await loginUser({ username, password });
-      setIsAuthenticated(true);
-      setUser(response.data);
-      localStorage.setItem(tokenKey, response.data.key)
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+    const response = await loginUser({ username, password });
+    setIsAuthenticated(true);
+    setUser(response.data);
+    localStorage.setItem(tokenKey, response.data.key)
   };
 
   const logout = () => {

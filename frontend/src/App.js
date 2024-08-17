@@ -15,9 +15,16 @@ const App = () => {
   const { isAuthenticated, loadUserInfo } = useAuth()
 
   useEffect(() => {
-    if (isAuthenticated) {
-      loadUserInfo();
+    async function callUserInfo() {
+      if (isAuthenticated) {
+        try {
+          await loadUserInfo();
+        } catch (error) {
+          console.log("Error loading user info:", error)
+        }
+      }
     }
+    callUserInfo()
     // eslint-disable-next-line
   }, [])
 

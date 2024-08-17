@@ -52,3 +52,50 @@
     color: #ffc107; // Highlight color on hover
   }
 }
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  min-width: 150px; // Adjust as needed
+}
+
+.dropdownItem {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #343a40;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+
+  &:hover {
+    background-color: #343A40; // Highlight color on hover
+    color: #fff; // Highlight color on hover
+  }
+}
+
+.userIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 50%;
+  background-color: #007bff; /* Background color of the circle */
+  color: #ffffff; /* Text color */
+  font-size: 1rem; /* Font size for initials */
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+
+  &:hover {
+    background-color: #0056b3; /* Change color on hover */
+  }
+}
