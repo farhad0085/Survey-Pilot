@@ -1,7 +1,8 @@
-import axios from './utils/axios';
+import axios, {getHeaders} from './utils/axios';
 
 export const registerUser = (userData) => axios.post(`/register`, userData);
-export const loginUser = (credentials) => axios.post(`/login`, credentials);
+export const loginUser = (credentials) => axios.post(`/api/auth/login/`, credentials);
+export const userInfo = () => axios.get("/api/auth/user/me", {headers: getHeaders()});
 export const createPoll = (pollData) => axios.post(`/polls`, pollData);
 export const createSurvey = (surveyData) => axios.post(`/surveys`, surveyData);
 export const voteInPoll = (pollId, voteData) => axios.post(`/polls/${pollId}/vote`, voteData);

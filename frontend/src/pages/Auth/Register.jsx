@@ -8,7 +8,6 @@ const RegisterPage = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,15 +20,13 @@ const RegisterPage = () => {
     }
     try {
       await register({
-        fullName,
+        full_name: fullName,
         email,
-        phoneNumber,
-        dateOfBirth,
+        phone: phoneNumber,
         password
       });
     } catch (err) {
       setError('Registration failed. Please try again.');
-      console.error(err);
     }
   };
 
@@ -60,14 +57,6 @@ const RegisterPage = () => {
             placeholder="Phone Number"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-            className={styles.input}
-          />
-          <input
-            type="date"
-            placeholder="Date of Birth"
-            value={dateOfBirth}
-            onChange={(e) => setDateOfBirth(e.target.value)}
             required
             className={styles.input}
           />

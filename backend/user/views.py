@@ -78,53 +78,23 @@ class RegisterAPIView(CreateAPIView):
 class LogoutAPIView(LoggerAPIView):
 
     def post(self, request):
-        try:
-            # on logout, make fcm_token empty, so that they don't receive notification
-            request.user.fcm_token = None
-            request.user.save()
-            # now logout the user
-            logout_user(request)
-            return self.send_200("Logged out successfully.")
-        except Exception as e:
-            self.log_error("Error in logout process", e)
-            return self.send_500()
+        logout_user(request)
+        return self.send_200("Logged out successfully.")
 
 
 class UserInfo(LoggerAPIView):
     """Check the userinfo of a user"""
 
-    def get_client_ip(self):
-        x_forwarded_for = self.request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(",")[0]
-        else:
-            ip = self.request.META.get("REMOTE_ADDR")
-        return ip
-
     def get(self, request):
         user = request.user
         serializer = UserAccountSerializer(user, context={"request": request})
-
-        # get should_logout
-        should_logout = True
-        last_active_login = request.user.active_logins[0]
-        ip_address = self.get_client_ip()
-        user_agent = request.META["HTTP_USER_AGENT"]
-        if (
-            last_active_login.ip == ip_address
-            and last_active_login.user_agent == user_agent
-        ):
-            should_logout = False
-        return Response({**serializer.data, "should_logout": should_logout})
+        return Response(serializer.data)
 
     def post(self, request):
-        serializer = AccountUpdateSerializer(
-            data=request.data, context={"request": request}
-        )
-        if serializer.is_valid(raise_exception=True):
-            data = serializer.save()
-
-            return Response({"data": data, "message": "Profile Updated Successfully"})
+        serializer = UserAccountSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+        data = serializer.save()
+        return Response({"data": data, "message": "Profile Updated Successfully"})
 
 
 class PasswordChangeView(LoggerAPIView):

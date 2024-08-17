@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Auth/Login';
 import Polls from './pages/Polls';
@@ -8,8 +8,18 @@ import Admin from './pages/Admin';
 import Home from './pages/Home/Home';
 import BaseLayout from './layouts/BaseLayout';
 import RegisterPage from './pages/Auth/Register';
+import { useAuth } from './contexts/AuthContext';
 
 const App = () => {
+
+  const { isAuthenticated, loadUserInfo } = useAuth()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadUserInfo();
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <Router>

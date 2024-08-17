@@ -69,20 +69,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserAccountSerializer(serializers.ModelSerializer):
     full_name = serializers.CharField(required=False, allow_blank=True, max_length=60,
         error_messages={"max_length": "full_name must be less than 60 charecters."})
-    company_list = serializers.SerializerMethodField()
-    default_country = serializers.SerializerMethodField()
-    extra_permissions = serializers.ListSerializer(required=False, allow_null=True, child=serializers.CharField())
-    brands = serializers.ListSerializer(required=False, allow_null=True, child=serializers.CharField())
-    countries = serializers.ListSerializer(required=False, allow_null=True, child=serializers.CharField())
-    point_of_contacts = serializers.SerializerMethodField()
-    procurement_policy_status = serializers.SerializerMethodField()
-    marketplaces = serializers.SerializerMethodField()
 
     class Meta:
         model = UserAccount
         exclude = ["user_permissions", "groups"]
         extra_kwargs = {'password': {'write_only': True, 'required': False}}
-        read_only_fields = ["point_of_contacts"]
 
     def validate_email(self, email):
         if UserAccount.objects.filter(email=email).exists():

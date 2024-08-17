@@ -12,7 +12,7 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login({ email, password });
+      await login(email, password);
     } catch (error) {
       setError('Login failed. Please check your credentials and try again.');
     }
