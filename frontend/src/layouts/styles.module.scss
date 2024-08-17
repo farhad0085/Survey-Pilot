@@ -1,0 +1,49 @@
+.navbarContainer {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; // Space out the logo and nav items
+  align-items: center;
+  background-color: #343a40; // Dark background for the navbar
+  padding: 0.5rem 2rem; // Increased padding for height
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Add subtle shadow for depth
+}
+
+.logo {
+  flex: 1;
+}
+
+.logoLink {
+  font-size: 1.8rem; // Larger font size for the logo
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffc107; // Highlight color on hover
+  }
+}
+
+.navItems {
+  display: flex;
+  align-items: center;
+}
+
+.navLink {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #ffc107; // Highlight color on hover
+  }
+}

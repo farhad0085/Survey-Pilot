@@ -1,23 +1,34 @@
-import React from 'react'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/Auth/Login';
+import Polls from './pages/Polls';
+import Surveys from './pages/Surveys';
+import Results from './pages/Results';
+import Admin from './pages/Admin';
+import Home from './pages/Home/Home';
+import BaseLayout from './layouts/BaseLayout';
 
-function App() {
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <BaseLayout>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route path="/polls" element={<Polls />} />
+          <Route path="/surveys" element={<Surveys />} />
+          <Route path="/results/poll/:id" render={({ match }) => (
+            <Results type="poll" id={match.params.id} />
+          )} />
+          <Route path="/results/survey/:id" render={({ match }) => (
+            <Results type="survey" id={match.params.id} />
+          )} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </BaseLayout>
+    </Router>
   );
-}
+};
 
 export default App;
