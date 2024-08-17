@@ -1,3 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9; // Light background for the whole page
+}
+
 .navbarContainer {
   position: sticky;
   top: 0;

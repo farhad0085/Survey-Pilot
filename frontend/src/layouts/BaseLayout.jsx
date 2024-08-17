@@ -9,7 +9,7 @@ const BaseLayout = ({ children }) => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.navbarContainer}>
         <nav className={styles.navbar}>
           <div className={styles.logo}>

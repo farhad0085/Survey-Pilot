@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   background-color: #f4f4f9; // Light background color
 }
 
@@ -52,7 +52,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-      background-color: #0056b3;
+    background-color: #0056b3;
   }
 }
 
@@ -61,11 +61,11 @@
   text-align: center;
 
   a {
-      color: #007bff;
-      text-decoration: none;
+    color: #007bff;
+    text-decoration: none;
 
-      &:hover {
-          text-decoration: underline;
-      }
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

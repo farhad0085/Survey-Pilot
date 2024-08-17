@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   font-family: Arial, sans-serif;
   background-color: #f9f9f9; // Light background for the whole page
 }
@@ -36,7 +36,7 @@
   transition: color 0.3s ease;
 
   &:hover {
-      color: #ffc107;
+    color: #ffc107;
   }
 }
 
@@ -128,7 +128,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-      background-color: #e0a800;
+    background-color: #e0a800;
   }
 }
 
