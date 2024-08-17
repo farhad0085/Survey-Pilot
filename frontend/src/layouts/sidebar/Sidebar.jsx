@@ -5,7 +5,7 @@ import { getFullName, getInitials } from '../../utils/auth'
 import { useAuth } from '../../contexts/AuthContext'
 
 const Sidebar = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className={styles.sidebar}>
@@ -28,21 +28,26 @@ const Sidebar = () => {
         </div>
         <div className={styles.menuItems}>
           <li className={styles.menuItem}>Dashboard</li>
-          <li className={styles.menuItem}>My Tasks</li>
-          <li className={styles.menuItem}>Notifications</li>
         </div>
       </div>
 
       <div className={styles.menuContainer}>
         <div className={styles.menuTitle}>
-          Projects
+          Poll
         </div>
         <div className={styles.menuItems}>
-          <li className={styles.menuItem}>Dashboard UI Kit</li>
-          <li className={styles.menuItem}>CRM System</li>
-          <li className={styles.menuItem}>Website Redesign</li>
-          <li className={styles.menuItem}>Communication Tool</li>
-          <li className={styles.menuItem} style={{ color: "#878787" }}>+ Add new project</li>
+          <li className={styles.menuItem}>Polls</li>
+          <li className={styles.menuItem} style={{ color: "#878787" }}>+ Add new poll</li>
+        </div>
+      </div>
+
+      <div className={styles.menuContainer}>
+        <div className={styles.menuTitle}>
+          Survey
+        </div>
+        <div className={styles.menuItems}>
+          <li className={styles.menuItem}>Surveys</li>
+          <li className={styles.menuItem} style={{ color: "#878787" }}>+ Add new survey</li>
         </div>
       </div>
 
@@ -51,10 +56,18 @@ const Sidebar = () => {
           Team
         </div>
         <div className={styles.menuItems}>
-          <li className={styles.menuItem}>Designers</li>
-          <li className={styles.menuItem}>Backend</li>
-          <li className={styles.menuItem}>Frontend</li>
-          <li className={styles.menuItem} style={{ color: "#878787" }}>+ Add new team</li>
+          <li className={styles.menuItem}>Users</li>
+          <li className={styles.menuItem} style={{ color: "#878787" }}>+ Add new user</li>
+        </div>
+      </div>
+
+      <div className={styles.menuContainer}>
+        <div className={styles.menuTitle}>
+          Settings
+        </div>
+        <div className={styles.menuItems}>
+          <li className={styles.menuItem}>Settings</li>
+          <li className={styles.menuItem} onClick={logout}>Logout</li>
         </div>
       </div>
 
