@@ -7,6 +7,7 @@ import Results from './pages/Results';
 import Admin from './pages/Admin';
 import Home from './pages/Home/Home';
 import BaseLayout from './layouts/BaseLayout';
+import RegisterPage from './pages/Auth/Register';
 
 const App = () => {
 
@@ -16,6 +17,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<RegisterPage />} />
           <Route path="/polls" element={<Polls />} />
           <Route path="/surveys" element={<Surveys />} />
           <Route path="/results/poll/:id" render={({ match }) => (
