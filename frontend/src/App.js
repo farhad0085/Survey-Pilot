@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import BaseLayout from './layouts/BaseLayout';
 import { useAuth } from './contexts/AuthContext';
 import AllRoutes from './routes/Routes';
 
@@ -22,9 +21,7 @@ const App = () => {
   }, [])
 
   return (
-    <BaseLayout>
-      <AllRoutes />
-    </BaseLayout>
+    <AllRoutes />
   );
 };
 

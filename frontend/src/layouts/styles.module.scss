@@ -6,6 +6,20 @@
   background-color: #f9f9f9; // Light background for the whole page
 }
 
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .navbar {
   position: sticky;
   top: 0;
