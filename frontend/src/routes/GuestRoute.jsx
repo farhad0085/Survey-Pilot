@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext';
+import { DASHBOARD_PAGE } from './urls';
 
 const GuestRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated } = useAuth()
@@ -15,7 +16,7 @@ const GuestRoute = ({ component: Component, ...rest }) => {
           ) : (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: DASHBOARD_PAGE,
                 search: props.location.search,
                 state: {
                   from: props.location,
