@@ -18,7 +18,7 @@ Users should be able to register, log in, and log out.
 Authenticated users can create and manage their own polls and surveys.
 
 ### Poll Creation
-Users can create polls with multiple choice questions.
+Users can create polls with multiple choice questions (text, image, audio, video).
 Set an expiration date or limit for the poll if desired.
 
 ### Survey Creation
