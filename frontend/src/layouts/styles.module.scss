@@ -6,15 +6,12 @@
   background-color: #f9f9f9; // Light background for the whole page
 }
 
-.navbarContainer {
+.navbar {
   position: sticky;
   top: 0;
-  z-index: 1000;
-  width: 100%;
-}
 
-.navbar {
   display: flex;
+  min-height: 60px;
   justify-content: space-between; // Space out the logo and nav items
   align-items: center;
   background-color: #343a40; // Dark background for the navbar
