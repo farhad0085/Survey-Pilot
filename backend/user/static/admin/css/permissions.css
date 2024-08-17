@@ -1,0 +1,8 @@
+.selector select {
+    width: 550px;
+    overflow: scroll;
+}
+
+.selector-available, .selector-chosen {
+    width: 550px;
+}

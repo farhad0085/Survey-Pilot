@@ -1,0 +1,26 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+  <p>Hi {{user_display_name}},</p>
+  <p>
+    Thanks for signing up with SurveyPilot. You're receiving this email because you've just registered an account in
+    <a href="{{ WEBSITE_BASE_URL }}">SurveyPilot</a>. We wish you a warm welcome!
+  </p>
+
+    <a href="{{ WEBSITE_BASE_URL }}/login">
+      Login Now
+    </a>
+
+    <p style="margin-bottom: 5px;">
+      Link not working for you? Copy the url below into your browser:
+    </p>
+    
+    <a href="{{ WEBSITE_BASE_URL }}/login" style="margin-top: 0px;">
+      {{ WEBSITE_BASE_URL }}/login
+    </a>
+
+    <p>Thank you<br />SurveyPilot Team</p>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer %}
