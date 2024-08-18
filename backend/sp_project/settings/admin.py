@@ -13,6 +13,7 @@ JAZZMIN_SETTINGS = {
     "show_ui_builder": True,
     "order_with_respect_to": [
         "user", "user.UserAccount",
+        "poll", "poll.Poll", "poll.Choice", "poll.Vote",
     ],
 
     # Hide these apps when generating side menu e.g (auth)

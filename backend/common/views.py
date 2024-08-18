@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from common.utils import HelperMethods
 
 
-class LoggerAPIView(APIView, HelperMethods):
+class StandardAPIView(APIView, HelperMethods):
     """APIView with Logger"""
 
     def send_200(self, data):

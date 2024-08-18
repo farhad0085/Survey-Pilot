@@ -8,7 +8,7 @@ from user.models import UserAccount
 class Poll(TrackingModel):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    is_active = models.BooleanField(null=True, blank=True, default=False)
+    is_active = models.BooleanField(null=True, blank=True, default=True)
     publish_at = models.DateTimeField(null=True, blank=True, default=timezone.now)
     expire_at = models.DateTimeField(null=True, blank=True)
     max_vote = models.IntegerField("Maximum number of vote", null=True, blank=True)

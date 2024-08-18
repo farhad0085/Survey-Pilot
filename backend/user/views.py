@@ -8,12 +8,12 @@ from django.contrib.auth import (
     login as django_login,
     logout as logout_user,
 )
-from common.views import LoggerAPIView
+from common.views import StandardAPIView
 from user.serializers import *
 from user.models import *
 
 
-class LoginView(LoggerAPIView):
+class LoginView(StandardAPIView):
     """Class based view loggin in user and returning Auth Token."""
 
     authentication_classes = [TokenAuthentication]
@@ -75,14 +75,14 @@ class RegisterAPIView(CreateAPIView):
         return self.user
 
 
-class LogoutAPIView(LoggerAPIView):
+class LogoutAPIView(StandardAPIView):
 
     def post(self, request):
         logout_user(request)
         return self.send_200("Logged out successfully.")
 
 
-class UserInfo(LoggerAPIView):
+class UserInfo(StandardAPIView):
     """Check the userinfo of a user"""
 
     def get(self, request):
@@ -97,7 +97,7 @@ class UserInfo(LoggerAPIView):
         return Response({"data": data, "message": "Profile Updated Successfully"})
 
 
-class PasswordChangeView(LoggerAPIView):
+class PasswordChangeView(StandardAPIView):
     """Modify rest auth default password change view"""
 
     serializer_class = PasswordChangeSerializer
@@ -111,7 +111,7 @@ class PasswordChangeView(LoggerAPIView):
         return Response({"message": "Password updated successfully."})
 
 
-class PasswordResetAPIView(LoggerAPIView):
+class PasswordResetAPIView(StandardAPIView):
     """
     Calls Django Auth PasswordResetForm save method.
 
@@ -132,7 +132,7 @@ class PasswordResetAPIView(LoggerAPIView):
         return self.send_200({"detail": "Password reset e-mail has been sent."})
 
 
-class PasswordResetConfirmAPIView(LoggerAPIView):
+class PasswordResetConfirmAPIView(StandardAPIView):
     """
     Password reset e-mail link is confirmed, therefore
     this resets the user's password.
