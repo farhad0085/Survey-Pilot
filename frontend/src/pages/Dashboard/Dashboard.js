@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from "./styles.module.scss";
 import DashboardLayout from '../../layouts/DashboardLayout';
+import { LIST_POLL_PAGE } from '../../routes/urls';
 
-const DashboardPage = () => {
+const DashboardPage = ({ history }) => {
 
-  const cards = [
-    { title: "Polls", count: 6 },
+  const data = [
+    { title: "Polls", count: 6, link: LIST_POLL_PAGE },
     { title: "Surveys", count: 5 },
     { title: "Users", count: 6 },
   ];
@@ -13,10 +14,10 @@ const DashboardPage = () => {
   return (
     <DashboardLayout>
       <div className={styles.cardContainer}>
-        {cards.map((card, index) => (
-          <div key={index} className={styles.card}>
-            <h2>{card.count}</h2>
-            <p>{card.title}</p>
+        {data.map((item, index) => (
+          <div key={index} className={styles.card} onClick={() => history.push(item.link)}>
+            <h2>{item.count}</h2>
+            <p>{item.title}</p>
           </div>
         ))}
       </div>

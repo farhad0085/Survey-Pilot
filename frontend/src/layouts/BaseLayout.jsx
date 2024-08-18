@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import styles from './styles.module.scss';
 import { getInitials } from '../utils/auth';
 import { DASHBOARD_PAGE, HOME_PAGE, LOGIN_PAGE, REGISTER_PAGE } from '../routes/urls';
+import { ToastContainer } from 'react-toastify'
 
 
 const BaseLayout = ({ children }) => {
@@ -63,6 +64,20 @@ const BaseLayout = ({ children }) => {
           )}
         </div>
       </nav>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       {children}
     </div>
   )

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../../../../layouts/DashboardLayout';
 import ListView from '../../../../components/ListView/ListView';
-import { CREATE_POLL_PAGE } from '../../../../routes/urls';
+import { buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/urls';
 import { listPoll } from '../../../../apis/poll';
+import { Link } from 'react-router-dom'
+import Loader from '../../../../components/Loader';
 
 const ListPollPage = () => {
 
@@ -23,9 +25,7 @@ const ListPollPage = () => {
   return (
     <DashboardLayout>
       {loading ? (
-        <div>
-          Loading...
-        </div>
+        <Loader />
       ) : (
         <ListView
           data={polls}
@@ -43,7 +43,7 @@ const ListPollPage = () => {
           renderDataRow={item => (
             <tr key={item.id}>
               <td>{item.id}</td>
-              <td>{item.title}</td>
+              <td><Link to={buildUpdatePollPageUrl(item.id)}>{item.title}</Link></td>
               <td>{item.votes}</td>
               <td>{item.created_at}</td>
               <td>{item.status}</td>

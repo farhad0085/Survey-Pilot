@@ -6,6 +6,7 @@ import { createPoll, getPoll, updatePoll } from '../../../../apis/poll';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styles from './styles.module.scss'
+import { showErrorMessage, showSuccessMessage } from '../../../../utils/toast';
 
 const PollForm = ({ isEdit }) => {
   const history = useHistory();
@@ -37,7 +38,7 @@ const PollForm = ({ isEdit }) => {
           setLoading(false)
         })
         .catch(error => {
-          console.log("Couldn't get the poll's data", error)
+          showErrorMessage("Couldn't get the poll's data")
           setLoading(false)
         })
     }
@@ -55,25 +56,29 @@ const PollForm = ({ isEdit }) => {
       is_active: isActive,
       publish_at: publishAt || null,
       expire_at: expireAt || null,
-      max_vote: maxVote,
+      max_vote: maxVote || null,
       collect_email: collectEmail,
     };
 
     if (isEdit) {
       updatePoll(pollId, data)
       .then(res => {
+        showSuccessMessage("Poll updated successfully.")
         setLoading(false)
       })
       .catch(error => {
         setLoading(false)
+        showErrorMessage("Couldn't save the changes, please try again later.")
       })
     } else {
       createPoll(data)
       .then(res => {
+        showSuccessMessage("Poll created successfully.")
         setLoading(false)
       })
       .catch(error => {
         setLoading(false)
+        showErrorMessage("Couldn't save the changes, please try again later.")
       })
     }
   };
@@ -139,8 +144,18 @@ const PollForm = ({ isEdit }) => {
             </div>
           </div>
 
+          <div className={styles.formGroup}>
+            <label>Maximum Allowed Vote</label>
+            <input
+              value={maxVote}
+              onChange={event => setMaxVote(event.target.value)}
+              type="number"
+              placeholder="Enter maximum number of allowed vote"
+            />
+          </div>
+
           <div className={styles.buttonGroup}>
-            <button type="submit" className={styles.primary} disabled={loading}>Submit</button>
+            <button type="submit" className={styles.primary} disabled={loading}>Save Changes</button>
             <button onClick={() => history.push(LIST_POLL_PAGE)} className={styles.secondary}>Cancel</button>
           </div>
         </form>

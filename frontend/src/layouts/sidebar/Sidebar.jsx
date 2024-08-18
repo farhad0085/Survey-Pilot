@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import logo from '../../assets/icons/logo.png'
 import { getFullName, getInitials } from '../../utils/auth'
 import { useAuth } from '../../contexts/AuthContext'
-import { LIST_POLL_PAGE } from '../../routes/urls'
+import { DASHBOARD_PAGE, LIST_POLL_PAGE } from '../../routes/urls'
 import { useHistory } from 'react-router-dom'
 
 const Sidebar = () => {
@@ -30,7 +30,7 @@ const Sidebar = () => {
           Menu
         </div>
         <div className={styles.menuItems}>
-          <li className={styles.menuItem}>Dashboard</li>
+          <li className={styles.menuItem} onClick={() => history.push(DASHBOARD_PAGE)}>Dashboard</li>
         </div>
       </div>
 
