@@ -3,9 +3,12 @@ import styles from './styles.module.scss'
 import logo from '../../assets/icons/logo.png'
 import { getFullName, getInitials } from '../../utils/auth'
 import { useAuth } from '../../contexts/AuthContext'
+import { LIST_POLL_PAGE } from '../../routes/urls'
+import { useHistory } from 'react-router-dom'
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
+  const history = useHistory()
 
   return (
     <div className={styles.sidebar}>
@@ -36,7 +39,7 @@ const Sidebar = () => {
           Poll
         </div>
         <div className={styles.menuItems}>
-          <li className={styles.menuItem}>Polls</li>
+          <li className={styles.menuItem} onClick={() => history.push(LIST_POLL_PAGE)}>Polls</li>
           <li className={styles.menuItem} style={{ color: "#878787" }}>+ Add new poll</li>
         </div>
       </div>

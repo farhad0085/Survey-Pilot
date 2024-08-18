@@ -7,3 +7,4 @@ export const PASSWORD_RESET_PAGE = "/forget-password/reset/:uid/:token";
 
 // Dashboard
 export const DASHBOARD_PAGE = "/dashboard";
+export const LIST_POLL_PAGE = "/dashboard/polls"
