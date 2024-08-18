@@ -4,8 +4,8 @@ from .models import Poll, Choice, Vote
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('name', 'is_active', 'publish_at', 'expire_at', 'max_vote', 'user', 'collect_email')
-    search_fields = ('name', 'description')
+    list_display = ('title', 'is_active', 'publish_at', 'expire_at', 'max_vote', 'user', 'collect_email')
+    search_fields = ('title', 'description')
     list_filter = ('is_active', 'publish_at', 'expire_at')
 
 

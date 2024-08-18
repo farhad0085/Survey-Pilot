@@ -6,7 +6,7 @@ from user.models import UserAccount
 
 
 class Poll(TrackingModel):
-    name = models.CharField(max_length=50)
+    title = models.CharField(max_length=50)
     description = models.TextField()
     is_active = models.BooleanField(null=True, blank=True, default=True)
     publish_at = models.DateTimeField(null=True, blank=True, default=timezone.now)
@@ -14,6 +14,9 @@ class Poll(TrackingModel):
     max_vote = models.IntegerField("Maximum number of vote", null=True, blank=True)
     user = models.ForeignKey(UserAccount, on_delete=models.SET_NULL, null=True, blank=True)
     collect_email = models.BooleanField(null=True, blank=True, default=True)
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Choice(TrackingModel):
