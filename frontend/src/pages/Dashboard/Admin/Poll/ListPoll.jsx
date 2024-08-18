@@ -5,6 +5,7 @@ import { buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/url
 import { listPoll } from '../../../../apis/poll';
 import { Link } from 'react-router-dom'
 import Loader from '../../../../components/Loader';
+import moment from 'moment'
 
 const ListPollPage = () => {
 
@@ -35,8 +36,11 @@ const ListPollPage = () => {
             <tr>
               <th>ID</th>
               <th>Title</th>
-              <th>Votes</th>
+              <th>Vote Count</th>
+              <th>Max Vote</th>
+              <th>Publish At</th>
               <th>Created At</th>
+              <th>Expire At</th>
               <th>Status</th>
             </tr>
           )}
@@ -44,9 +48,12 @@ const ListPollPage = () => {
             <tr key={item.id}>
               <td>{item.id}</td>
               <td><Link to={buildUpdatePollPageUrl(item.id)}>{item.title}</Link></td>
-              <td>{item.votes}</td>
-              <td>{item.created_at}</td>
-              <td>{item.status}</td>
+              <td>{item.vote_count}</td>
+              <td>{item.max_vote || "N/A"}</td>
+              <td>{item.publish_at ? moment(item.publish_at).format("DD-MM-YYYY hh:mm a") : '-'}</td>
+              <td>{item.created_at ? moment(item.created_at).format("DD-MM-YYYY hh:mm a") : '-'}</td>
+              <td>{item.expire_at ? moment(item.expire_at).format("DD-MM-YYYY hh:mm a") : '-'}</td>
+              <td>{item.is_active ? "Active" : "Closed"}</td>
             </tr>
           )}
         />

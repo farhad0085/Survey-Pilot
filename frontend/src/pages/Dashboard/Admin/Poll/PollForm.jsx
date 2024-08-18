@@ -7,6 +7,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styles from './styles.module.scss'
 import { showErrorMessage, showSuccessMessage } from '../../../../utils/toast';
+import { convertDatetimeForInput, formatTimeToUTC } from '../../../../utils/time';
 
 const PollForm = ({ isEdit }) => {
   const history = useHistory();
@@ -31,8 +32,8 @@ const PollForm = ({ isEdit }) => {
           if (pollDetails.title) setTitle(pollDetails.title);
           if (pollDetails.description) setDescription(pollDetails.description);
           if (pollDetails.is_active) setIsActive(pollDetails.is_active);
-          if (pollDetails.publish_at) setPublishAt(pollDetails.publish_at);
-          if (pollDetails.expire_at) setExpireAt(pollDetails.expire_at);
+          if (pollDetails.publish_at) setPublishAt(convertDatetimeForInput(pollDetails.publish_at));
+          if (pollDetails.expire_at) setExpireAt(convertDatetimeForInput(pollDetails.expire_at));
           if (pollDetails.max_vote) setMaxVote(pollDetails.max_vote);
           if (pollDetails.collect_email) setCollectEmail(pollDetails.collect_email);
           setLoading(false)
@@ -54,8 +55,8 @@ const PollForm = ({ isEdit }) => {
       title,
       description,
       is_active: isActive,
-      publish_at: publishAt || null,
-      expire_at: expireAt || null,
+      publish_at: publishAt ? formatTimeToUTC(publishAt) : null,
+      expire_at: expireAt ? formatTimeToUTC(expireAt) : null,
       max_vote: maxVote || null,
       collect_email: collectEmail,
     };
@@ -128,7 +129,7 @@ const PollForm = ({ isEdit }) => {
                 <input
                   value={publishAt}
                   onChange={event => setPublishAt(event.target.value)}
-                  type="date"
+                  type="datetime-local"
                 />
               </div>
             </div>
@@ -138,7 +139,7 @@ const PollForm = ({ isEdit }) => {
                 <input
                   value={expireAt}
                   onChange={event => setExpireAt(event.target.value)}
-                  type="date"
+                  type="datetime-local"
                 />
               </div>
             </div>

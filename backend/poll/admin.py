@@ -4,14 +4,14 @@ from .models import Poll, Choice, Vote
 
 @admin.register(Poll)
 class PollAdmin(admin.ModelAdmin):
-    list_display = ('title', 'is_active', 'publish_at', 'expire_at', 'max_vote', 'user', 'collect_email')
+    list_display = ('title', 'publish_at', 'expire_at', 'max_vote', 'user', 'collect_email', 'vote_count', 'is_active',)
     search_fields = ('title', 'description')
     list_filter = ('is_active', 'publish_at', 'expire_at')
 
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ('poll', 'text', 'type', 'get_vote_count')
+    list_display = ('poll', 'text', 'type', 'vote_count')
     search_fields = ('text',)
     list_filter = ('type',)
 

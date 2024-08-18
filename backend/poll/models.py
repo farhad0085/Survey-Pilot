@@ -17,6 +17,10 @@ class Poll(TrackingModel):
 
     def __str__(self) -> str:
         return self.title
+    
+    @property
+    def vote_count(self):
+        return self.votes.count()
 
 
 class Choice(TrackingModel):
@@ -31,11 +35,11 @@ class Choice(TrackingModel):
     image = models.ImageField(upload_to='poll/images', null=True, blank=True)
     audio = models.FileField(upload_to='poll/audios', null=True, blank=True)
     video = models.FileField(upload_to='poll/videos', null=True, blank=True)
-    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, null=True, blank=True)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name="choices", null=True, blank=True)
     type = models.CharField(max_length=20, null=True, blank=True, choices=TYPES, default=ChoiceType.TEXT)
 
     @property
-    def get_vote_count(self):
+    def vote_count(self):
         return self.votes.count()
 
 
@@ -43,6 +47,6 @@ class Vote(TrackingModel):
     email = models.EmailField(null=True, blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.TextField(null=True, blank=True)
-    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, null=True, blank=True)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name="votes", null=True, blank=True)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE, related_name="votes", null=True, blank=True)
 
