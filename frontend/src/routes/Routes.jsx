@@ -6,12 +6,12 @@ import GuestRoute from "./GuestRoute";
 
 // pages
 import Login from '../pages/Auth/Login';
-import Polls from '../pages/Polls';
-import Surveys from '../pages/Surveys';
 import Home from '../pages/Home/Home';
 import RegisterPage from '../pages/Auth/Register';
 import DashboardPage from "../pages/Dashboard/Dashboard";
 import ListPollPage from "../pages/Dashboard/Admin/Poll/ListPoll";
+import CreatePollPage from "../pages/Dashboard/Admin/Poll/CreatePoll";
+import UpdatePollPage from "../pages/Dashboard/Admin/Poll/UpdatePoll";
 
 const Routes = () => {
 
@@ -22,9 +22,8 @@ const Routes = () => {
       <GuestRoute exact path={URLS.REGISTER_PAGE} component={RegisterPage} />
       <PrivateRoute exact path={URLS.DASHBOARD_PAGE} component={DashboardPage} />
       <PrivateRoute exact path={URLS.LIST_POLL_PAGE} component={ListPollPage} />
-
-      <PrivateRoute path="/polls" component={Polls} />
-      <PrivateRoute path="/surveys" component={Surveys} />
+      <PrivateRoute exact path={URLS.CREATE_POLL_PAGE} component={CreatePollPage} />
+      <PrivateRoute exact path={URLS.UPDATE_POLL_PAGE} component={UpdatePollPage} />
     </Switch>
   );
 };

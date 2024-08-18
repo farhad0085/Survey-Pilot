@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
-import { registerUser, loginUser, userInfo } from '../api';
+import { registerUser, loginUser, userInfo } from '../apis/auth';
 
 // Create a Context for the authentication state
 const AuthContext = createContext();
