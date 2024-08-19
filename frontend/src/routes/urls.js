@@ -11,7 +11,13 @@ export const LIST_POLL_PAGE = "/dashboard/polls"
 export const CREATE_POLL_PAGE = "/dashboard/polls/create"
 export const UPDATE_POLL_PAGE = "/dashboard/polls/:pollId/update"
 
+// public
+export const POLL_PAGE = "/polls/:pollId"
 
 export const buildUpdatePollPageUrl = (pollId) => {
   return UPDATE_POLL_PAGE.replace(":pollId", pollId);
+};
+
+export const buildPollPageUrl = (pollId) => {
+  return POLL_PAGE.replace(":pollId", pollId);
 };

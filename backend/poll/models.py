@@ -1,12 +1,12 @@
 from django.db import models
-from common.models import TrackingModel
 from django.utils import timezone
+from common.models import TrackingModel
 from poll.enums import ChoiceType
 from user.models import UserAccount
 
 
 class Poll(TrackingModel):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=500)
     description = models.TextField()
     is_active = models.BooleanField(null=True, blank=True, default=True)
     publish_at = models.DateTimeField(null=True, blank=True, default=timezone.now)

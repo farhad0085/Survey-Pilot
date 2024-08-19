@@ -1,7 +1,9 @@
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from common.views import StandardAPIView
 from poll.models import Choice, Poll
-from poll.serializers import PollSerializer
+from poll.serializers import PollSerializer, VoteSerializer
 
 
 class PollListCreateAPIView(ListCreateAPIView):
@@ -58,3 +60,35 @@ class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
                     )
 
         return Response(serializer.data)
+
+
+class VoteAPIView(StandardAPIView):
+
+    permission_classes = [AllowAny]
+
+    def get_client_ip(self):
+        request = self.request
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+    
+    def get_user_agent(self):
+        return self.request.META['HTTP_USER_AGENT']
+
+    def post(self, request):
+        user_agent = self.get_user_agent()
+        ip_address = self.get_client_ip()
+        data = {
+            **request.data,
+            "user_agent": user_agent,
+            "ip_address": ip_address,
+        }
+        serializer = VoteSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        vote = serializer.save()
+
+        # return Poll data
+        return self.send_200(PollSerializer(vote.poll).data)

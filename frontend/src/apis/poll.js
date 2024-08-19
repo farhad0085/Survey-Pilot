@@ -15,3 +15,7 @@ export const createPoll = async (pollData) => {
 export const updatePoll = async (pollId, pollData) => {
   return await axios.put(`/api/poll/polls/${pollId}/`, pollData, { headers: getHeaders() });
 }
+
+export const submitPoll = async (pollId, pollData) => {
+  return await axios.post(`/api/poll/vote/`, pollData);
+}

@@ -12,6 +12,7 @@ import DashboardPage from "../pages/Dashboard/Dashboard";
 import ListPollPage from "../pages/Dashboard/Admin/Poll/ListPoll";
 import CreatePollPage from "../pages/Dashboard/Admin/Poll/CreatePoll";
 import UpdatePollPage from "../pages/Dashboard/Admin/Poll/UpdatePoll";
+import PollPage from "../pages/Poll/PollPage";
 
 const Routes = () => {
 
@@ -24,6 +25,7 @@ const Routes = () => {
       <PrivateRoute exact path={URLS.LIST_POLL_PAGE} component={ListPollPage} />
       <PrivateRoute exact path={URLS.CREATE_POLL_PAGE} component={CreatePollPage} />
       <PrivateRoute exact path={URLS.UPDATE_POLL_PAGE} component={UpdatePollPage} />
+      <Route exact path={URLS.POLL_PAGE} component={PollPage} />
     </Switch>
   );
 };

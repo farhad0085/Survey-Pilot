@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from poll.models import Choice, Poll
+from rest_framework.exceptions import NotFound, ValidationError
+from poll.models import Choice, Poll, Vote
 
 
 class ChoiceSerializer(serializers.ModelSerializer):
@@ -32,3 +33,23 @@ class PollSerializer(serializers.ModelSerializer):
     def get_choices(self, obj):
         choices = obj.choices.all()
         return ChoiceSerializer(choices, many=True).data
+
+
+class VoteSerializer(serializers.ModelSerializer):
+
+    def validate(self, data):
+        poll = data["poll"]
+        choice = data["choice"]
+
+        # make sure this choice is a choice of the provided poll
+        if choice.poll != poll:
+            raise ValidationError("Invalid choice")
+        return data
+    
+    class Meta:
+        model  = Vote
+        fields = "__all__"
+        extra_kwargs = {
+            'poll': {'required': True, 'allow_null': False},
+            'choice': {'required': True, 'allow_null': False},
+        }
