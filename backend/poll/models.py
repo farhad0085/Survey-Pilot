@@ -13,7 +13,8 @@ class Poll(TrackingModel):
     expire_at = models.DateTimeField(null=True, blank=True)
     max_vote = models.IntegerField("Maximum number of vote", null=True, blank=True)
     user = models.ForeignKey(UserAccount, on_delete=models.SET_NULL, null=True, blank=True)
-    collect_email = models.BooleanField(null=True, blank=True, default=True)
+    collect_email = models.BooleanField("Do you want to collect email?", null=True, blank=True, default=True)
+    show_result = models.BooleanField("Show result after vote?", null=True, blank=True, default=True)
 
     def __str__(self) -> str:
         return self.title

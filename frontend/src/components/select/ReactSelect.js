@@ -8,7 +8,7 @@ class ReactSelect extends Component {
       control: (baseStyles, state) => ({
         ...baseStyles,
         borderColor: state.isFocused ? 'initial' : 'hsl(0,0%, 92%)',
-        minHeight: "46px"
+        minHeight: "40px"
       }),
     }
 

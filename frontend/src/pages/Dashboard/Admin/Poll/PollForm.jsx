@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import styles from './styles.module.scss'
 import { showErrorMessage, showSuccessMessage } from '../../../../utils/toast';
 import { convertDatetimeForInput, formatTimeToUTC } from '../../../../utils/time';
+import ReactSelect from '../../../../components/select/ReactSelect';
 
 const PollForm = ({ isEdit }) => {
   const history = useHistory();
@@ -19,7 +20,8 @@ const PollForm = ({ isEdit }) => {
   const [publishAt, setPublishAt] = useState("");
   const [expireAt, setExpireAt] = useState("");
   const [maxVote, setMaxVote] = useState("");
-  const [collectEmail, setCollectEmail] = useState(true);
+  const [collectEmail, setCollectEmail] = useState({ value: 1, label: "Yes" });
+  const [showResult, setShowResult] = useState({ value: 1, label: "Yes" });
   const [choices, setChoices] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -36,7 +38,8 @@ const PollForm = ({ isEdit }) => {
           if (pollDetails.publish_at) setPublishAt(convertDatetimeForInput(pollDetails.publish_at));
           if (pollDetails.expire_at) setExpireAt(convertDatetimeForInput(pollDetails.expire_at));
           if (pollDetails.max_vote) setMaxVote(pollDetails.max_vote);
-          if (pollDetails.collect_email) setCollectEmail(pollDetails.collect_email);
+          setCollectEmail(pollDetails.collect_email ? { value: 1, label: "Yes" } : { value: 0, label: "No" });
+          setShowResult(pollDetails.show_result ? { value: 1, label: "Yes" } : { value: 0, label: "No" });
           if (pollDetails.choices) setChoices(pollDetails.choices);
           setLoading(false)
         })
@@ -77,7 +80,8 @@ const PollForm = ({ isEdit }) => {
       publish_at: publishAt ? formatTimeToUTC(publishAt) : null,
       expire_at: expireAt ? formatTimeToUTC(expireAt) : null,
       max_vote: maxVote || null,
-      collect_email: collectEmail,
+      collect_email: collectEmail?.value,
+      show_result: showResult?.value,
       choices
     };
 
@@ -173,6 +177,28 @@ const PollForm = ({ isEdit }) => {
                 type="number"
                 placeholder="Enter maximum number of allowed vote"
               />
+            </div>
+            <div className={styles.row}>
+              <div className={styles.col}>
+                <div className={styles.formGroup}>
+                  <label>Do you want to collect email?</label>
+                  <ReactSelect
+                    options={[{ value: 1, label: "Yes" }, { value: 0, label: "No" }]}
+                    value={collectEmail}
+                    onChange={(newValue) => setCollectEmail(newValue)}
+                  />
+                </div>
+              </div>
+              <div className={styles.col}>
+                <div className={styles.formGroup}>
+                  <label>Do you want show poll result after user's submission?</label>
+                  <ReactSelect
+                    options={[{ value: 1, label: "Yes" }, { value: 0, label: "No" }]}
+                    value={showResult}
+                    onChange={(newValue) => setShowResult(newValue)}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className={styles.formGroup}>
