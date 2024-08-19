@@ -4,12 +4,17 @@ from poll.models import Choice, Poll
 
 class ChoiceSerializer(serializers.ModelSerializer):
     vote_count = serializers.SerializerMethodField()
+    can_edit = serializers.SerializerMethodField()
+
     class Meta:
         model = Choice
         fields = "__all__"
 
     def get_vote_count(self, obj):
         return obj.vote_count
+    
+    def get_can_edit(self, obj):
+        return obj.can_edit
 
 
 class PollSerializer(serializers.ModelSerializer):

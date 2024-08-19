@@ -37,10 +37,20 @@ class Choice(TrackingModel):
     video = models.FileField(upload_to='poll/videos', null=True, blank=True)
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE, related_name="choices", null=True, blank=True)
     type = models.CharField(max_length=20, null=True, blank=True, choices=TYPES, default=ChoiceType.TEXT)
+    index = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['index']
+        unique_together = ['poll', 'index']
 
     @property
     def vote_count(self):
         return self.votes.count()
+    
+    @property
+    def can_edit(self):
+        # the creator cannot edit the choice if someone voted it already
+        return not bool(self.vote_count)
 
 
 class Vote(TrackingModel):

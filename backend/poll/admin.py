@@ -11,7 +11,7 @@ class PollAdmin(admin.ModelAdmin):
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ('poll', 'text', 'type', 'vote_count')
+    list_display = ('poll', 'text', 'type', 'vote_count', 'index')
     search_fields = ('text',)
     list_filter = ('type',)
 

@@ -42,6 +42,52 @@
             /* Remove default focus outline */
           }
         }
+
+        .choiceRow {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+          
+          input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-right: 10px;
+          }
+      
+          button.danger {
+            padding: 10px 20px;
+            background-color: #b60202;
+            color: #ffffff;
+            border: 1px solid #b60202;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+      
+            &:disabled {
+              background-color: #a32929;
+              cursor: not-allowed;
+            }
+            &:hover {
+              background-color: #9e0000;
+            }
+          }
+        }
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+
+        .col {
+          flex: 1;
+        }
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+        }
       }
 
       .buttonGroup {
