@@ -39,16 +39,22 @@ class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
         # assign choices again, if exists, update, otherwise create
         choices = request.data.pop('choices', [])
         for choice in choices:
+            choice_index = choice.get('index')
             choice_id = choice.get('id')
             if choice_id:
                 choice_obj = Choice.objects.filter(id=choice_id).first()
                 if choice_obj:
                     choice_obj.text = choice.get('text')
-                    choice_obj.index = choice.get('index')
+                    choice_obj.index = choice_index
                     choice_obj.poll = instance
                     choice_obj.save()
             else:
                 # create new
-                Choice.objects.create(text=choice.get('text'), poll=instance, index=choice.get('index'))
+                if choice_index:
+                    Choice.objects.create(
+                        text=choice.get('text'),
+                        poll=instance,
+                        index=choice_index
+                    )
 
         return Response(serializer.data)
