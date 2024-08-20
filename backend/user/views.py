@@ -9,6 +9,7 @@ from django.contrib.auth import (
     logout as logout_user,
 )
 from common.views import StandardAPIView
+from poll.models import Poll
 from user.serializers import *
 from user.models import *
 
@@ -95,6 +96,22 @@ class UserInfo(StandardAPIView):
         serializer.is_valid(raise_exception=True)
         data = serializer.save()
         return Response({"data": data, "message": "Profile Updated Successfully"})
+
+
+class DashboardAPIview(StandardAPIView):
+
+    def get(self, request):
+        # get polls created by the user
+        poll_count = Poll.objects.filter(user=request.user).count()
+        
+        data = {
+            "cards": {
+                "polls": poll_count,
+                "surveys": 2,
+                "users": 6,
+            }
+        }
+        return self.send_200(data)
 
 
 class PasswordChangeView(StandardAPIView):
