@@ -33,3 +33,7 @@ export const buildUpdatePollPageUrl = (pollId) => {
 export const buildPollPageUrl = (pollId) => {
   return POLL_PAGE.replace(":pollId", pollId);
 };
+
+export const buildUpdateSurveyPageUrl = (surveyId) => {
+  return UPDATE_SURVEY_PAGE.replace(":surveyId", surveyId);
+};
