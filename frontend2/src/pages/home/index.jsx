@@ -8,10 +8,11 @@ import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
+import { useAuth } from 'contexts/AuthContext';
 
 const Home = () => {
 
-  const isAuthenticated = false
+  const { isAuthenticated } = useAuth()
 
   return (
     <Container>

@@ -5,7 +5,6 @@ import { Link as RouterLink } from 'react-router-dom';
 // material-ui
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
@@ -24,7 +23,6 @@ import { Formik } from 'formik';
 // assets
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
-import { REGISTER_PAGE } from 'routes/urls';
 
 // ============================|| JWT - LOGIN ||============================ //
 
@@ -139,24 +137,6 @@ export default function AuthLogin({ isDemo = false }) {
               <Grid item xs={12}>
                 <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
                   Login
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <Divider>
-                  <Typography variant="caption">Don't have an account?</Typography>
-                </Divider>
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  disableElevation
-                  fullWidth
-                  size="large"
-                  variant="outlined"
-                  color="secondary"
-                  component={RouterLink}
-                  to={REGISTER_PAGE}
-                >
-                  Register Here
                 </Button>
               </Grid>
             </Grid>

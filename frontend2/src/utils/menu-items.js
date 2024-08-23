@@ -8,6 +8,7 @@ import {
   ChromeOutlined,
   QuestionOutlined
 } from '@ant-design/icons';
+import { LOGIN_PAGE, REGISTER_PAGE } from 'routes/urls';
 
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -38,17 +39,17 @@ const menuItems = {
           id: 'login1',
           title: 'Login',
           type: 'item',
-          url: '/login',
+          url: LOGIN_PAGE,
           icon: LoginOutlined,
-          target: true
+          target: false
         },
         {
           id: 'register1',
           title: 'Register',
           type: 'item',
-          url: '/register',
+          url: REGISTER_PAGE,
           icon: ProfileOutlined,
-          target: true
+          target: false
         }
       ]
     },
