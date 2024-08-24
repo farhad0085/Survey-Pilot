@@ -6,7 +6,6 @@ import {
   BgColorsOutlined,
   FontSizeOutlined,
   ChromeOutlined,
-  QuestionOutlined
 } from '@ant-design/icons';
 import { LOGIN_PAGE, REGISTER_PAGE } from 'routes/urls';
 
@@ -93,15 +92,6 @@ const menuItems = {
           url: '/dashboard/sample-page',
           icon: ChromeOutlined
         },
-        {
-          id: 'documentation',
-          title: 'Documentation',
-          type: 'item',
-          url: 'https://codedthemes.gitbook.io/mantis/',
-          icon: QuestionOutlined,
-          external: true,
-          target: true
-        }
       ]
     }
   ]
