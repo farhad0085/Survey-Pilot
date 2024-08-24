@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: import.meta.env.REACT_APP_API_BASE
+  baseURL: import.meta.env.VITE_APP_API_BASE
 })
 
 export default instance

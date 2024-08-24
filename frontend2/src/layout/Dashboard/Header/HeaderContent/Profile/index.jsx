@@ -29,6 +29,7 @@ import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import SettingOutlined from '@ant-design/icons/SettingOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import avatar1 from 'assets/images/users/avatar-1.png';
+import { useAuth } from 'contexts/AuthContext';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -50,6 +51,7 @@ function a11yProps(index) {
 
 export default function Profile() {
   const theme = useTheme();
+  const { logout } = useAuth()
 
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -134,7 +136,7 @@ export default function Profile() {
                       <Grid item>
                         <Tooltip title="Logout">
                           <IconButton size="large" sx={{ color: 'text.primary' }}>
-                            <LogoutOutlined />
+                            <LogoutOutlined onClick={logout} />
                           </IconButton>
                         </Tooltip>
                       </Grid>

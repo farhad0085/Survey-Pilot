@@ -31,7 +31,7 @@ const Home = () => {
             Create Survey
           </Button>
           {isAuthenticated ? (
-            <Button variant="outlined" color="secondary" component={Link} to={DASHBOARD_PAGE} sx={{ mx: 1 }}>
+            <Button variant="contained" color="primary" component={Link} to={DASHBOARD_PAGE} sx={{ mx: 1 }}>
               Dashboard
             </Button>
           ) : (
