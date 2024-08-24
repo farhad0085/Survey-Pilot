@@ -23,7 +23,7 @@ const menuItems = {
           id: 'dashboard',
           title: 'Dashboard',
           type: 'item',
-          url: '/dashboard',
+          url: '/dashboard/home',
           icon: DashboardOutlined,
           breadcrumbs: false
         }
