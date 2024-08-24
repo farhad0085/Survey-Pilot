@@ -10,7 +10,7 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 // project import
 import MainCard from 'components/MainCard';
 
-export default function Breadcrumbs({ navigation, title, ...others }) {
+export default function Breadcrumbs({ navigation, ...others }) {
   const location = useLocation();
   const [main, setMain] = useState();
   const [item, setItem] = useState();
@@ -83,7 +83,7 @@ export default function Breadcrumbs({ navigation, title, ...others }) {
                 {itemContent}
               </MuiBreadcrumbs>
             </Grid>
-            {title && (
+            {item.showBreadcrumbTitle && (
               <Grid item sx={{ mt: 2 }}>
                 <Typography variant="h5">{item.title}</Typography>
               </Grid>

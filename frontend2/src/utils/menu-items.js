@@ -1,7 +1,7 @@
 import {
   DashboardOutlined,
-  LoginOutlined,
-  ProfileOutlined,
+  BarsOutlined,
+  PlusOutlined,
   BarcodeOutlined,
   BgColorsOutlined,
   FontSizeOutlined,
@@ -25,7 +25,8 @@ const menuItems = {
           type: 'item',
           url: '/dashboard/home',
           icon: DashboardOutlined,
-          breadcrumbs: false
+          breadcrumbs: false,
+          showBreadcrumbTitle: true
         }
       ]
     },
@@ -39,16 +40,16 @@ const menuItems = {
           title: 'Polls',
           type: 'item',
           url: LIST_POLL_PAGE,
-          icon: LoginOutlined,
-          target: false
+          icon: BarsOutlined,
+          showBreadcrumbTitle: false
         },
         {
           id: 'create-poll',
           title: 'Create new poll',
           type: 'item',
           url: CREATE_POLL_PAGE,
-          icon: ProfileOutlined,
-          target: false
+          icon: PlusOutlined,
+          showBreadcrumbTitle: false
         }
       ]
     },
@@ -62,21 +63,24 @@ const menuItems = {
           title: 'Typography',
           type: 'item',
           url: '/dashboard/typography',
-          icon: FontSizeOutlined
+          icon: FontSizeOutlined,
+          showBreadcrumbTitle: true
         },
         {
           id: 'util-color',
           title: 'Color',
           type: 'item',
           url: '/dashboard/color',
-          icon: BgColorsOutlined
+          icon: BgColorsOutlined,
+          showBreadcrumbTitle: true
         },
         {
           id: 'util-shadow',
           title: 'Shadow',
           type: 'item',
           url: '/dashboard/shadow',
-          icon: BarcodeOutlined
+          icon: BarcodeOutlined,
+          showBreadcrumbTitle: true
         }
       ]
     },
@@ -90,7 +94,8 @@ const menuItems = {
           title: 'Sample Page',
           type: 'item',
           url: '/dashboard/sample-page',
-          icon: ChromeOutlined
+          icon: ChromeOutlined,
+          showBreadcrumbTitle: true
         },
       ]
     }

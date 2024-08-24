@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/urls';
 import { listPoll } from '../../../../apis/poll';
-import { Link } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import moment from 'moment'
-import { useNavigate } from 'react-router-dom'
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Link,
+} from '@mui/material';
 
 const ListPollPage = () => {
 
@@ -23,50 +36,57 @@ const ListPollPage = () => {
   }, [])
 
   return (
-    <>
+    <Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', my: 4 }}>
+        <Typography variant="h5" component="h1">
+          Polls
+        </Typography>
+        <Button variant="contained" color="primary" onClick={() => navigateTo(CREATE_POLL_PAGE)}>
+          Add New
+        </Button>
+      </Box>
+
       {loading ? (
-        <>Loading...</>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <CircularProgress />
+        </Box>
       ) : (
-
-
-        <div>
-          <div>
-            <h1>Polls</h1>
-            <button onClick={() => navigateTo(CREATE_POLL_PAGE)}>
-              Add New
-            </button>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Vote Count</th>
-                <th>Max Vote</th>
-                <th>Publish At</th>
-                <th>Created At</th>
-                <th>Expire At</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {polls.map(item => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td><Link to={buildUpdatePollPageUrl(item.id)}>{item.title}</Link></td>
-                  <td>{item.vote_count}</td>
-                  <td>{item.max_vote || "N/A"}</td>
-                  <td>{item.publish_at ? moment(item.publish_at).format("DD-MM-YYYY hh:mm a") : '-'}</td>
-                  <td>{item.created_at ? moment(item.created_at).format("DD-MM-YYYY hh:mm a") : '-'}</td>
-                  <td>{item.expire_at ? moment(item.expire_at).format("DD-MM-YYYY hh:mm a") : '-'}</td>
-                  <td>{item.is_active ? "Active" : "Closed"}</td>
-                </tr>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Vote Count</TableCell>
+                <TableCell>Max Vote</TableCell>
+                <TableCell>Publish At</TableCell>
+                <TableCell>Created At</TableCell>
+                <TableCell>Expire At</TableCell>
+                <TableCell>Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {polls.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>
+                    <Link component={RouterLink} to={buildUpdatePollPageUrl(item.id)}>
+                      {item.title}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{item.vote_count}</TableCell>
+                  <TableCell>{item.max_vote || 'N/A'}</TableCell>
+                  <TableCell>{item.publish_at ? moment(item.publish_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
+                  <TableCell>{item.created_at ? moment(item.created_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
+                  <TableCell>{item.expire_at ? moment(item.expire_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
+                  <TableCell>{item.is_active ? 'Active' : 'Closed'}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
-    </>
+    </Box>
   );
 };
 
