@@ -8,7 +8,7 @@ export default instance
 
 
 export function getHeaders(additional) {
-  const userToken = localStorage.getItem(import.meta.env.REACT_APP_AUTH_TOKEN_KEY);
+  const userToken = localStorage.getItem(import.meta.env.VITE_APP_AUTH_TOKEN_KEY);
   const timezoneOffset = new Date().getTimezoneOffset();
 
   let headers = {

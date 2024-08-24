@@ -7,7 +7,7 @@ import {
   FontSizeOutlined,
   ChromeOutlined,
 } from '@ant-design/icons';
-import { LOGIN_PAGE, REGISTER_PAGE } from 'routes/urls';
+import { CREATE_POLL_PAGE, LIST_POLL_PAGE } from 'routes/urls';
 
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -30,23 +30,23 @@ const menuItems = {
       ]
     },
     {
-      id: 'authentication',
-      title: 'Authentication',
+      id: 'poll',
+      title: 'Poll',
       type: 'group',
       children: [
         {
-          id: 'login1',
-          title: 'Login',
+          id: 'list-poll',
+          title: 'Polls',
           type: 'item',
-          url: LOGIN_PAGE,
+          url: LIST_POLL_PAGE,
           icon: LoginOutlined,
           target: false
         },
         {
-          id: 'register1',
-          title: 'Register',
+          id: 'create-poll',
+          title: 'Create new poll',
           type: 'item',
-          url: REGISTER_PAGE,
+          url: CREATE_POLL_PAGE,
           icon: ProfileOutlined,
           target: false
         }

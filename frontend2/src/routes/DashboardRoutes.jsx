@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import DashboardLayout from 'layout/Dashboard';
 import { IsLoggedIn } from './RouteTypes';
+import * as URLS from './urls';
 
 const Color = Loadable(lazy(() => import('pages/component-overview/color')));
 const Typography = Loadable(lazy(() => import('pages/component-overview/typography')));
@@ -12,11 +13,12 @@ const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
+const ListPollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/ListPoll')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
-  path: '/dashboard',
+  path: URLS.DASHBOARD_PAGE,
   element: <IsLoggedIn><DashboardLayout /></IsLoggedIn>,
   children: [
     {
@@ -38,7 +40,11 @@ const MainRoutes = {
     {
       path: 'typography',
       element: <Typography />
-    }
+    },
+    {
+      path: URLS.LIST_POLL_PAGE,
+      element: <ListPollPage />
+    },
   ]
 };
 
