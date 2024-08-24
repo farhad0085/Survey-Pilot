@@ -19,19 +19,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 // third party
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useNavigate } from 'react-router-dom'
 
 // assets
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import { useAuth } from 'contexts/AuthContext';
-import { DASHBOARD_PAGE } from 'routes/urls';
 
 
 export default function AuthLogin() {
 
   const { login } = useAuth()
-  const navigateTo = useNavigate()
   const [checked, setChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -49,7 +46,6 @@ export default function AuthLogin() {
       try {
         await login(values.email, values.password);
         actions.setSubmitting(false); // Set submitting to false after successful login
-        navigateTo(DASHBOARD_PAGE)
       } catch (error) {
         actions.setSubmitting(false); // Set submitting to false if there's an error
         actions.setFieldError('submit', 'Invalid email or password'); // Set error message
