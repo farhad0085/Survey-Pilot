@@ -1,5 +1,4 @@
 from rest_framework.exceptions import ValidationError
-from common.utils import check_all_exists
 from .models import *
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
@@ -21,11 +20,10 @@ class LoginSerializer(serializers.Serializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
-    password_2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = UserModel
-        fields = ('email', 'password', 'password_2', 'first_name', 'last_name', 'phone')
+        fields = ('email', 'password', 'first_name', 'last_name', 'phone')
         extra_kwargs = {
             'email': {'required': True, 'allow_blank': False},
             'first_name': {'required': True, 'allow_blank': False},
@@ -37,12 +35,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         if UserModel.objects.filter(email=email).exists():
             raise serializers.ValidationError("A user is already exists with this email.")
         return email
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password_2']:
-            raise serializers.ValidationError({"password_2": "Password didn't match."})
-
-        return attrs
 
     def create(self, validated_data):
         user = UserModel.objects.create_user(
