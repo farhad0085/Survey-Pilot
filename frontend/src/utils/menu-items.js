@@ -3,7 +3,7 @@ import {
   BarsOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { CREATE_POLL_PAGE, LIST_POLL_PAGE } from 'routes/urls';
+import { CREATE_POLL_PAGE, DASHBOARD_HOME_PAGE, LIST_POLL_PAGE } from 'routes/urls';
 
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -19,7 +19,7 @@ const menuItems = {
           id: 'dashboard',
           title: 'Dashboard',
           type: 'item',
-          url: '/dashboard/home',
+          url: DASHBOARD_HOME_PAGE,
           icon: DashboardOutlined,
           breadcrumbs: false,
           showBreadcrumbTitle: true

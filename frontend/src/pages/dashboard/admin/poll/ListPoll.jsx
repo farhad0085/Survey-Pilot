@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { buildPollPageUrl, buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/urls';
+import { buildPollPageUrl, buildPollResultPageUrl, buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/urls';
 import { listPoll } from '../../../../apis/poll';
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import moment from 'moment'
@@ -61,10 +61,11 @@ const ListPollPage = () => {
                 <TableCell>Vote Count</TableCell>
                 <TableCell>Max Vote</TableCell>
                 <TableCell>Publish At</TableCell>
-                <TableCell>Created At</TableCell>
                 <TableCell>Expire At</TableCell>
                 <TableCell>Status</TableCell>
+                <TableCell>Last Update</TableCell>
                 <TableCell>Preview</TableCell>
+                <TableCell>Result</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -79,9 +80,9 @@ const ListPollPage = () => {
                   <TableCell>{item.vote_count}</TableCell>
                   <TableCell>{item.max_vote || 'N/A'}</TableCell>
                   <TableCell>{item.publish_at ? moment(item.publish_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
-                  <TableCell>{item.created_at ? moment(item.created_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>{item.expire_at ? moment(item.expire_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>{item.is_active ? 'Active' : 'Closed'}</TableCell>
+                  <TableCell>{item.updated_at ? moment(item.updated_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>
                     <Button
                       component={'a'}
@@ -93,6 +94,17 @@ const ListPollPage = () => {
                       color='info'
                     >
                       Open it
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="info"
+                      onClick={() => navigateTo(buildPollResultPageUrl(item.id))}
+                      sx={{ textTransform: 'uppercase' }}
+                      endIcon={<ExportOutlined />}
+                    >
+                      View Result
                     </Button>
                   </TableCell>
                 </TableRow>

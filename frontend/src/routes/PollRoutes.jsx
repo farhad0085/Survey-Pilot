@@ -7,6 +7,7 @@ import DashboardLayout from 'layout/Dashboard';
 const ListPollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/ListPoll')));
 const CreatePollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/CreatePoll')));
 const UpdatePollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/UpdatePoll')));
+const PollResultPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/PollResult')));
 
 
 const PollRoutes = [
@@ -25,6 +26,10 @@ const PollRoutes = [
       {
         path: URLS.UPDATE_POLL_PAGE,
         element: <UpdatePollPage />
+      },
+      {
+        path: URLS.RESULT_POLL_PAGE,
+        element: <PollResultPage />
       },
     ]
   }

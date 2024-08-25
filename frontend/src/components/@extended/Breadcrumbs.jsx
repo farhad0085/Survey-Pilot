@@ -9,6 +9,7 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project import
 import MainCard from 'components/MainCard';
+import { DASHBOARD_HOME_PAGE } from 'routes/urls';
 
 export default function Breadcrumbs({ navigation, ...others }) {
   const location = useLocation();
@@ -41,11 +42,6 @@ export default function Breadcrumbs({ navigation, ...others }) {
     });
   });
 
-  // only used for component demo breadcrumbs
-  if (location.pathname === '/breadcrumbs') {
-    location.pathname = '/dashboard/analytics';
-  }
-
   let mainContent;
   let itemContent;
   let breadcrumbContent = <Typography />;
@@ -76,8 +72,8 @@ export default function Breadcrumbs({ navigation, ...others }) {
           <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1}>
             <Grid item>
               <MuiBreadcrumbs aria-label="breadcrumb">
-                <Typography component={Link} to="/" color="textSecondary" variant="h6" sx={{ textDecoration: 'none' }}>
-                  Home
+                <Typography component={Link} to={DASHBOARD_HOME_PAGE} color="textSecondary" variant="h6" sx={{ textDecoration: 'none' }}>
+                  Dashboard
                 </Typography>
                 {mainContent}
                 {itemContent}

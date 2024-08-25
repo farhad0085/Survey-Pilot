@@ -11,8 +11,9 @@ export const DASHBOARD_HOME_PAGE = "/dashboard/home";
 
 // polls
 export const LIST_POLL_PAGE = "/dashboard/polls"
-export const CREATE_POLL_PAGE = "/dashboard/create-polls"
-export const UPDATE_POLL_PAGE = "/dashboard/update-polls/:pollId"
+export const CREATE_POLL_PAGE = "/dashboard/poll/create"
+export const UPDATE_POLL_PAGE = "/dashboard/poll/:pollId/update"
+export const RESULT_POLL_PAGE = "/dashboard/poll/:pollId"
 
 // surveys
 export const LIST_SURVEY_PAGE = "/dashboard/surveys"
@@ -33,6 +34,10 @@ export const buildUpdatePollPageUrl = (pollId) => {
 
 export const buildPollPageUrl = (pollId) => {
   return POLL_PAGE.replace(":pollId", pollId);
+};
+
+export const buildPollResultPageUrl = (pollId) => {
+  return RESULT_POLL_PAGE.replace(":pollId", pollId);
 };
 
 export const buildUpdateSurveyPageUrl = (surveyId) => {
