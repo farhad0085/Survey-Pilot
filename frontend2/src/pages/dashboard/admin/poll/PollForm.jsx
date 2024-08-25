@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { LIST_POLL_PAGE } from '../../../../routes/urls';
-import { createPoll, getPoll, updatePoll } from '../../../../apis/poll';
+import { LIST_POLL_PAGE } from 'routes/urls';
+import { createPoll, getPoll, updatePoll } from 'apis/poll';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { showErrorMessage, showSuccessMessage } from '../../../../utils/toast';
-import { convertDatetimeForInput, formatTimeToUTC } from '../../../../utils/time';
+import { showErrorMessage, showSuccessMessage } from 'utils/toast';
+import { convertDatetimeForInput, formatTimeToUTC } from 'utils/time';
 import {
   Box,
   Button,
@@ -43,15 +43,15 @@ const PollForm = ({ isEdit }) => {
       title: Yup.string().required('Title is required'),
       description: Yup.string(),
       publishAt: Yup.date().nullable(),
-      expireAt: Yup.date().nullable(),
+      // expireAt: Yup.date().nullable(),
       maxVote: Yup.number().nullable(),
       choices: Yup.array().of(Yup.object().required('Choice is required')),
     }),
     onSubmit: async (values) => {
       const data = {
         ...values,
-        publish_at: values.publishAt ? formatTimeToUTC(values.publishAt) : null,
-        expire_at: values.expireAt ? formatTimeToUTC(values.expireAt) : null,
+        publish_at: (values.publishAt && values.publishAt !== "Invalid date") ? formatTimeToUTC(values.publishAt) : null,
+        expire_at: (values.expireAt && values.expireAt !== "Invalid date") ? formatTimeToUTC(values.expireAt) : null,
         collect_email: values.collectEmail,
         show_result: values.showResult,
       };
@@ -62,9 +62,7 @@ const PollForm = ({ isEdit }) => {
       }
       catch (error) {
         showErrorMessage("Couldn't save the changes, please try again later.");
-
       }
-
     },
   });
 
@@ -242,12 +240,12 @@ const PollForm = ({ isEdit }) => {
                   </Button>
                 </Box>
               ))}
-              <Button variant="contained" onClick={addNewChoice}>
+              <Button color='secondary' variant="outlined" size="small" onClick={addNewChoice}>
                 + Add Choice
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Box display="flex" justifyContent="space-between">
+              <Box display="flex" gap={1}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -261,7 +259,7 @@ const PollForm = ({ isEdit }) => {
                   variant="outlined"
                   onClick={() => navigate(LIST_POLL_PAGE)}
                 >
-                  Cancel
+                  Close
                 </Button>
               </Box>
             </Grid>
