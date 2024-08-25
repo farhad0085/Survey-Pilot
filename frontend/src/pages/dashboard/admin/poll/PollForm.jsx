@@ -21,6 +21,9 @@ import {
   Typography,
   Paper,
 } from '@mui/material';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragOutlined } from '@ant-design/icons';
+
 
 const PollForm = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -110,6 +113,18 @@ const PollForm = ({ isEdit }) => {
   const removeChoice = (index) => {
     const newChoices = formik.values.choices.filter((_, i) => i !== index);
     formik.setFieldValue('choices', newChoices);
+  };
+
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+
+    if (!destination) return;
+
+    const items = Array.from(formik.values.choices);
+    const [movedItem] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, movedItem);
+
+    formik.setFieldValue('choices', items);
   };
 
   return (
@@ -222,24 +237,53 @@ const PollForm = ({ isEdit }) => {
               <Typography variant="subtitle1" gutterBottom>
                 Choices
               </Typography>
-              {formik.values.choices.map((choice, index) => (
-                <Box key={index} display="flex" alignItems="center" mb={2}>
-                  <TextField
-                    fullWidth
-                    value={choice.text}
-                    onChange={(e) => handleChoiceChange(index, e.target.value)}
-                    placeholder={`Choice ${index + 1}`}
-                  />
-                  <Button
-                    sx={{ ml: 2 }}
-                    variant="outlined"
-                    color="error"
-                    onClick={() => removeChoice(index)}
-                  >
-                    Remove
-                  </Button>
-                </Box>
-              ))}
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="choices">
+                  {(provided) => (
+                    <Box
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {formik.values.choices.map((choice, index) => (
+                        <Draggable key={index} draggableId={index.toString()} index={index}>
+                          {(provided) => (
+                            <Box
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              key={index}
+                              display="flex"
+                              alignItems="center"
+                              mb={2}
+                            >
+                              {/* Drag handle icon */}
+                              <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+                                <DragOutlined size={24} />
+                              </Box>
+                              <TextField
+                                fullWidth
+                                value={choice.text}
+                                onChange={(e) => handleChoiceChange(index, e.target.value)}
+                                placeholder={`Choice ${index + 1}`}
+                              />
+                              <Button
+                                sx={{ ml: 2 }}
+                                variant="outlined"
+                                color="error"
+                                onClick={() => removeChoice(index)}
+                              >
+                                Remove
+                              </Button>
+                            </Box>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </Box>
+                  )}
+                </Droppable>
+              </DragDropContext>
+
               <Button color='secondary' variant="outlined" size="small" onClick={addNewChoice}>
                 + Add Choice
               </Button>
