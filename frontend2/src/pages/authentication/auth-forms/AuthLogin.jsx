@@ -44,7 +44,7 @@ export default function AuthLogin() {
     }),
     onSubmit: async (values, actions) => {
       try {
-        await login(values.email, values.password);
+        await login(values.email, values.password, checked);
         actions.setSubmitting(false); // Set submitting to false after successful login
       } catch (error) {
         actions.setSubmitting(false); // Set submitting to false if there's an error
