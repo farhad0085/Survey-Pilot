@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/urls';
+import { buildPollPageUrl, buildUpdatePollPageUrl, CREATE_POLL_PAGE } from '../../../../routes/urls';
 import { listPoll } from '../../../../apis/poll';
 import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import moment from 'moment'
@@ -17,6 +17,7 @@ import {
   Typography,
   Link,
 } from '@mui/material';
+import { ExportOutlined } from '@ant-design/icons';
 
 const ListPollPage = () => {
 
@@ -63,6 +64,7 @@ const ListPollPage = () => {
                 <TableCell>Created At</TableCell>
                 <TableCell>Expire At</TableCell>
                 <TableCell>Status</TableCell>
+                <TableCell>Preview</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -80,6 +82,19 @@ const ListPollPage = () => {
                   <TableCell>{item.created_at ? moment(item.created_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>{item.expire_at ? moment(item.expire_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>{item.is_active ? 'Active' : 'Closed'}</TableCell>
+                  <TableCell>
+                    <Button
+                      component={'a'}
+                      target='_blank'
+                      href={buildPollPageUrl(item.id)}
+                      variant="contained"
+                      sx={{ textTransform: 'uppercase' }}
+                      endIcon={<ExportOutlined />}
+                      color='info'
+                    >
+                      Open it
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

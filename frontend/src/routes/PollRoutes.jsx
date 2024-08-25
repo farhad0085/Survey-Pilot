@@ -8,25 +8,26 @@ const ListPollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/List
 const CreatePollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/CreatePoll')));
 const UpdatePollPage = Loadable(lazy(() => import('pages/dashboard/admin/poll/UpdatePoll')));
 
-// ==============================|| MAIN ROUTING ||============================== //
 
-const PollRoutes = {
-  path: '',
-  element: <IsLoggedIn><DashboardLayout /></IsLoggedIn>,
-  children: [
-    {
-      path: URLS.LIST_POLL_PAGE,
-      element: <ListPollPage />,
-    },
-    {
-      path: URLS.CREATE_POLL_PAGE,
-      element: <CreatePollPage />
-    },
-    {
-      path: URLS.UPDATE_POLL_PAGE,
-      element: <UpdatePollPage />
-    },
-  ]
-};
+const PollRoutes = [
+  {
+    path: '',
+    element: <IsLoggedIn><DashboardLayout /></IsLoggedIn>,
+    children: [
+      {
+        path: URLS.LIST_POLL_PAGE,
+        element: <ListPollPage />,
+      },
+      {
+        path: URLS.CREATE_POLL_PAGE,
+        element: <CreatePollPage />
+      },
+      {
+        path: URLS.UPDATE_POLL_PAGE,
+        element: <UpdatePollPage />
+      },
+    ]
+  }
+];
 
 export default PollRoutes;

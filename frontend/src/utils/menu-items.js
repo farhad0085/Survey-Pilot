@@ -2,10 +2,6 @@ import {
   DashboardOutlined,
   BarsOutlined,
   PlusOutlined,
-  BarcodeOutlined,
-  BgColorsOutlined,
-  FontSizeOutlined,
-  ChromeOutlined,
 } from '@ant-design/icons';
 import { CREATE_POLL_PAGE, LIST_POLL_PAGE } from 'routes/urls';
 
@@ -53,52 +49,6 @@ const menuItems = {
         }
       ]
     },
-    {
-      id: 'utilities',
-      title: 'Utilities',
-      type: 'group',
-      children: [
-        {
-          id: 'util-typography',
-          title: 'Typography',
-          type: 'item',
-          url: '/dashboard/typography',
-          icon: FontSizeOutlined,
-          showBreadcrumbTitle: true
-        },
-        {
-          id: 'util-color',
-          title: 'Color',
-          type: 'item',
-          url: '/dashboard/color',
-          icon: BgColorsOutlined,
-          showBreadcrumbTitle: true
-        },
-        {
-          id: 'util-shadow',
-          title: 'Shadow',
-          type: 'item',
-          url: '/dashboard/shadow',
-          icon: BarcodeOutlined,
-          showBreadcrumbTitle: true
-        }
-      ]
-    },
-    {
-      id: 'support',
-      title: 'Support',
-      type: 'group',
-      children: [
-        {
-          id: 'sample-page',
-          title: 'Sample Page',
-          type: 'item',
-          url: '/dashboard/sample-page',
-          icon: ChromeOutlined,
-          showBreadcrumbTitle: true
-        },
-      ]
-    }
   ]
 }
 

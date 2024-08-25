@@ -1,8 +1,8 @@
 export const HOME_PAGE = "/"
 
 // Auth
-export const REGISTER_PAGE = "/auth/register";
-export const LOGIN_PAGE = "/auth/login";
+export const REGISTER_PAGE = "/register";
+export const LOGIN_PAGE = "/login";
 export const PASSWORD_RESET_PAGE = "/forget-password/reset/:uid/:token";
 
 // Dashboard
