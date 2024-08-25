@@ -30,6 +30,7 @@ import SettingOutlined from '@ant-design/icons/SettingOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 import avatar1 from 'assets/images/users/avatar-1.png';
 import { useAuth } from 'contexts/AuthContext';
+import { getFullName } from 'utils/auth';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -51,7 +52,7 @@ function a11yProps(index) {
 
 export default function Profile() {
   const theme = useTheme();
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
 
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -93,7 +94,7 @@ export default function Profile() {
         <Stack direction="row" spacing={1.25} alignItems="center" sx={{ p: 0.5 }}>
           <Avatar alt="profile user" src={avatar1} size="sm" />
           <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
-            John Doe
+            {getFullName(user)}
           </Typography>
         </Stack>
       </ButtonBase>
@@ -126,7 +127,7 @@ export default function Profile() {
                         <Stack direction="row" spacing={1.25} alignItems="center">
                           <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
                           <Stack>
-                            <Typography variant="h6">John Doe</Typography>
+                            <Typography variant="h6">{getFullName(user)}</Typography>
                             <Typography variant="body2" color="text.secondary">
                               UI/UX Designer
                             </Typography>

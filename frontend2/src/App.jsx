@@ -1,19 +1,32 @@
 import { RouterProvider } from 'react-router-dom';
-
-// project import
 import router from 'routes';
 import ThemeCustomization from 'themes';
-
 import ScrollTop from 'components/ScrollTop';
-import { AuthProvider } from 'contexts/AuthContext';
+import { useAuth } from 'contexts/AuthContext';
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
-
-// ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
+import { useEffect } from 'react';
+import { showErrorMessage } from 'utils/toast';
 
 export default function App() {
+  
+  const { isAuthenticated, loadUserInfo } = useAuth()
+
+  useEffect(() => {
+    async function callUserInfo() {
+      if (isAuthenticated) {
+        try {
+          await loadUserInfo();
+        } catch (error) {
+          showErrorMessage("Error loading user info:", error)
+        }
+      }
+    }
+    callUserInfo()
+    // eslint-disable-next-line
+  }, [])
+
   return (
-    <AuthProvider>
       <ThemeCustomization>
         <ScrollTop>
           <RouterProvider router={router} />
@@ -31,6 +44,5 @@ export default function App() {
           theme="light"
         />
       </ThemeCustomization>
-    </AuthProvider>
   );
 }
