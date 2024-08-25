@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from common.views import StandardAPIView
-from poll.models import Choice, Poll
+from poll.models import Choice, Poll, Vote
 from poll.serializers import PollSerializer, VoteSerializer
 
 
@@ -87,7 +87,34 @@ class VoteAPIView(StandardAPIView):
         }
         serializer = VoteSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        vote = serializer.save()
+        
+        poll = serializer.validated_data["poll"]
+        choice = serializer.validated_data["choice"]
+        email = serializer.validated_data.get("email")
+
+        # we won't let a user submit multiple choice
+        # even if he does, we'll just update his choice
+        # instead of creating a new one
+        if poll.collect_email:
+            vote_obj = Vote.objects.filter(
+                poll=poll,
+                ip_address=ip_address,
+                user_agent=user_agent,
+                email=email
+            ).first()
+        else:
+            vote_obj = Vote.objects.filter(
+                poll=poll,
+                ip_address=ip_address,
+                user_agent=user_agent,
+            ).first()
+        
+        if vote_obj:
+            vote_obj.choice = choice
+            vote_obj.save()
+        else:
+            # otherwise simply create it
+            vote_obj = serializer.save()
 
         # return Poll data
-        return self.send_200(PollSerializer(vote.poll).data)
+        return self.send_200(PollSerializer(poll).data)
