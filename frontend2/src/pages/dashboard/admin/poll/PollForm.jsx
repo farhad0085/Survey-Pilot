@@ -43,7 +43,7 @@ const PollForm = ({ isEdit }) => {
       title: Yup.string().required('Title is required'),
       description: Yup.string(),
       publishAt: Yup.date().nullable(),
-      // expireAt: Yup.date().nullable(),
+      expireAt: Yup.date().nullable(),
       maxVote: Yup.number().nullable(),
       choices: Yup.array().of(Yup.object().required('Choice is required')),
     }),
