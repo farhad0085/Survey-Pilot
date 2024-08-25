@@ -123,7 +123,7 @@ const PollPage = () => {
                                     value={totalVotes > 0 ? (choice.vote_count / totalVotes) * 100 : 0}
                                   />
                                 </Box>
-                                <Typography variant="caption">{choice.vote_count} votes</Typography>
+                                <Typography variant="caption" sx={{ userSelect: 'none' }}>{choice.vote_count} votes</Typography>
                               </Box>
                             </Grid>
                           </Grid>
