@@ -16,6 +16,9 @@ class Poll(TrackingModel):
     collect_email = models.BooleanField("Do you want to collect email?", null=True, blank=True, default=True)
     show_result = models.BooleanField("Show result after vote?", null=True, blank=True, default=True)
 
+    class Meta:
+        ordering = ["-created_at"]
+
     def __str__(self) -> str:
         return self.title
     

@@ -17,7 +17,7 @@ const MainRoutes = {
   element: <IsLoggedIn><DashboardLayout /></IsLoggedIn>,
   children: [
     {
-      path: 'home',
+      path: URLS.DASHBOARD_HOME_PAGE,
       element: <DashboardDefault />
     },
     {

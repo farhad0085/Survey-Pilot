@@ -7,11 +7,12 @@ export const PASSWORD_RESET_PAGE = "/forget-password/reset/:uid/:token";
 
 // Dashboard
 export const DASHBOARD_PAGE = "/dashboard";
+export const DASHBOARD_HOME_PAGE = "/dashboard/home";
 
 // polls
 export const LIST_POLL_PAGE = "/dashboard/polls"
-export const CREATE_POLL_PAGE = "/dashboard/polls/create"
-export const UPDATE_POLL_PAGE = "/dashboard/polls/:pollId/update"
+export const CREATE_POLL_PAGE = "/dashboard/create-polls"
+export const UPDATE_POLL_PAGE = "/dashboard/update-polls/:pollId"
 
 // surveys
 export const LIST_SURVEY_PAGE = "/dashboard/surveys"

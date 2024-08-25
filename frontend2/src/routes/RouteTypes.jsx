@@ -1,12 +1,12 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from 'contexts/AuthContext';
-import { DASHBOARD_PAGE, LOGIN_PAGE } from './urls';
+import { DASHBOARD_HOME_PAGE, LOGIN_PAGE } from './urls';
 
 
 export const IsGuest = ({ children }) => {
   const { isAuthenticated } = useAuth()
   if (isAuthenticated) {
-    return <Navigate to={DASHBOARD_PAGE} />;
+    return <Navigate to={DASHBOARD_HOME_PAGE} />;
   }
   return children;
 };

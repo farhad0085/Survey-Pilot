@@ -52,12 +52,11 @@ class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
                     choice_obj.save()
             else:
                 # create new
-                if choice_index:
-                    Choice.objects.create(
-                        text=choice.get('text'),
-                        poll=instance,
-                        index=choice_index
-                    )
+                Choice.objects.create(
+                    text=choice.get('text'),
+                    poll=instance,
+                    index=choice_index
+                )
 
         return Response(serializer.data)
 
