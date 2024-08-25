@@ -17,6 +17,7 @@ import Box from '@mui/material/Box';
 
 // third party
 import * as Yup from 'yup';
+import "yup-phone-lite"; // required for phone number validation
 import { useFormik } from 'formik';
 
 // project import
@@ -47,7 +48,7 @@ export default function AuthRegister() {
       first_name: Yup.string().required('First name is required'),
       last_name: Yup.string().required('Last name is required'),
       email: Yup.string().email('Invalid email address').required('Email is required'),
-      phone: Yup.string().required('Phone Number is required'),
+      phone: Yup.string().phone("BD", "Invalid phone number").required('Phone Number is required'),
       password: Yup.string().required('Password is required'),
     }),
     onSubmit: async (values, { setSubmitting, setFieldError, setErrors }) => {
