@@ -29,7 +29,7 @@ import { useAuth } from 'contexts/AuthContext';
 export default function AuthLogin() {
 
   const { login } = useAuth()
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
