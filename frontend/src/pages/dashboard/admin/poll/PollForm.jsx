@@ -254,7 +254,11 @@ const PollForm = ({ isEdit }) => {
                               key={index}
                               display="flex"
                               alignItems="center"
-                              mb={2}
+                              mb={1}
+                              p={1}
+                              border={1}
+                              borderColor="divider"
+                              borderRadius={1}
                             >
                               {/* Drag handle icon */}
                               <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
@@ -284,7 +288,7 @@ const PollForm = ({ isEdit }) => {
                 </Droppable>
               </DragDropContext>
 
-              <Button color='secondary' variant="outlined" size="small" onClick={addNewChoice}>
+              <Button color='secondary' variant="outlined" size="small" sx={{ mt: 1 }} onClick={addNewChoice}>
                 + Add Choice
               </Button>
             </Grid>
