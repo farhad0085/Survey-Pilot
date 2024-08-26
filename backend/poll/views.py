@@ -1,13 +1,13 @@
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from common.views import StandardAPIView
 from poll.models import Choice, Poll, Vote
-from poll.serializers import PollSerializer, VoteSerializer
+from poll.permissions import IsPollOwner
+from poll.serializers import ChoiceSerializer, PollSerializer, VoteSerializer
 
 
 class PollListCreateAPIView(ListCreateAPIView):
-    
     serializer_class = PollSerializer
 
     def get_queryset(self):
@@ -18,12 +18,10 @@ class PollListCreateAPIView(ListCreateAPIView):
 
 
 class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, IsPollOwner]
     serializer_class = PollSerializer
     queryset = Poll.objects.all()
     
-    def get_queryset(self):
-        return Poll.objects.filter(user=self.request.user)
-
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
@@ -59,6 +57,23 @@ class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
                 )
 
         return Response(serializer.data)
+
+
+class PollVoteRetrieveAPIView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated, IsPollOwner]
+    queryset = Poll.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        poll_obj = self.get_object()
+        votes = list(poll_obj.votes.all().values('id', 'email', 'ip_address', 'user_agent', 'choice', 'updated_at').distinct())
+
+        # add choice's serialized data
+        get_vote_obj = lambda vote: Choice.objects.get(id=vote['choice'])
+        votes = [{**vote, 'choice': ChoiceSerializer(get_vote_obj(vote)).data} for vote in votes]
+        data = {
+            "votes": votes
+        }
+        return Response(data)
 
 
 class VoteAPIView(StandardAPIView):

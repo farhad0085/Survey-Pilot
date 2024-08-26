@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPoll } from '../../../../apis/poll';
+import { getPoll, getPollAnalytics } from '../../../../apis/poll';
 import { showErrorMessage } from 'utils/toast';
 import MainCard from 'components/MainCard';
 import {
@@ -18,11 +18,14 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import BarChart from './BarChart';
+import AnalyticsTable from './PollAnalytics';
 
 const PollResultPage = () => {
   const { pollId } = useParams();
   const [poll, setPoll] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -34,6 +37,17 @@ const PollResultPage = () => {
       .catch(error => {
         setLoading(false);
         showErrorMessage("Couldn't load poll data, please try again later!");
+      });
+
+    setAnalyticsLoading(true);
+    getPollAnalytics(pollId)
+      .then(res => {
+        setAnalytics(res.data);
+        setAnalyticsLoading(false);
+      })
+      .catch(error => {
+        setAnalyticsLoading(false);
+        showErrorMessage("Couldn't load analytical data, please try again later!");
       });
   }, [pollId]);
 
@@ -58,7 +72,7 @@ const PollResultPage = () => {
   }
 
   // Calculate total votes to normalize progress bars
-  const totalVotes = poll.choices.reduce((total, choice) => total + choice.vote_count, 0);
+  const totalVotes = poll.choices?.reduce((total, choice) => total + choice.vote_count, 0);
 
   return (
     <>
@@ -68,7 +82,7 @@ const PollResultPage = () => {
         </Typography>
       </Box>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Box sx={{ mb: 4 }}>
             <Typography variant="h5" component="h1" gutterBottom>
               {poll.title}
@@ -109,11 +123,14 @@ const PollResultPage = () => {
           </TableContainer>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Paper sx={{ padding: 2, height: '100%' }}>
-            <Typography variant="h5">Visualization</Typography>
+            <Typography variant="h5">Votes</Typography>
             <BarChart data={poll.choices} />
           </Paper>
+        </Grid>
+        <Grid item xs={12}>
+         <AnalyticsTable analytics={analytics} analyticsLoading={analyticsLoading} />
         </Grid>
       </Grid>
     </>
