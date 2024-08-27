@@ -29,6 +29,7 @@ const PollForm = ({ isEdit }) => {
   const navigate = useNavigate();
   const { pollId } = useParams();
   const [loading, setLoading] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const choiceRefs = useRef([]); // Ref to keep track of the choice input elements
 
   const formik = useFormik({
@@ -241,92 +242,106 @@ const PollForm = ({ isEdit }) => {
               )}
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="publishAt"
-                name="publishAt"
-                label="Publish At"
-                type="datetime-local"
-                value={formik.values.publishAt}
-                onChange={formik.handleChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+            {/* Toggle Advanced Settings */}
+            <Grid item xs={12}>
+              <Button
+                variant="outlined"
+                onClick={() => setShowAdvanced(prev => !prev)}
+              >
+                {showAdvanced ? 'Hide Advanced Settings' : 'Show Advanced Settings'}
+              </Button>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="expireAt"
-                name="expireAt"
-                label="Expire At"
-                type="datetime-local"
-                value={formik.values.expireAt}
-                onChange={formik.handleChange}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                id="maxVote"
-                name="maxVote"
-                label="Maximum Allowed Vote"
-                type="number"
-                value={formik.values.maxVote}
-                onChange={formik.handleChange}
-                error={formik.touched.maxVote && Boolean(formik.errors.maxVote)}
-                helperText={formik.touched.maxVote && formik.errors.maxVote}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Collect Email?</InputLabel>
-                <Select
-                  id="collectEmail"
-                  name="collectEmail"
-                  value={formik.values.collectEmail}
-                  onChange={formik.handleChange}
-                  label="Collect Email?"
-                >
-                  <MenuItem value={1}>Yes</MenuItem>
-                  <MenuItem value={0}>No</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Show Poll Result After Submission?</InputLabel>
-                <Select
-                  id="showResult"
-                  name="showResult"
-                  value={formik.values.showResult}
-                  onChange={formik.handleChange}
-                  label="Show Poll Result After Submission?"
-                >
-                  <MenuItem value={1}>Yes</MenuItem>
-                  <MenuItem value={0}>No</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel>Do you want to feature the poll in homepage?</InputLabel>
-                <Select
-                  id="featured"
-                  name="featured"
-                  value={formik.values.featured}
-                  onChange={formik.handleChange}
-                  label="Do you want to feature the poll in homepage?"
-                >
-                  <MenuItem value={1}>Yes</MenuItem>
-                  <MenuItem value={0}>No</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+            {showAdvanced && (
+              <>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    id="publishAt"
+                    name="publishAt"
+                    label="Publish At"
+                    type="datetime-local"
+                    value={formik.values.publishAt}
+                    onChange={formik.handleChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    id="expireAt"
+                    name="expireAt"
+                    label="Expire At"
+                    type="datetime-local"
+                    value={formik.values.expireAt}
+                    onChange={formik.handleChange}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    id="maxVote"
+                    name="maxVote"
+                    label="Maximum Allowed Vote"
+                    type="number"
+                    value={formik.values.maxVote}
+                    onChange={formik.handleChange}
+                    error={formik.touched.maxVote && Boolean(formik.errors.maxVote)}
+                    helperText={formik.touched.maxVote && formik.errors.maxVote}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel>Collect Email?</InputLabel>
+                    <Select
+                      id="collectEmail"
+                      name="collectEmail"
+                      value={formik.values.collectEmail}
+                      onChange={formik.handleChange}
+                      label="Collect Email?"
+                    >
+                      <MenuItem value={1}>Yes</MenuItem>
+                      <MenuItem value={0}>No</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel>Show Poll Result After Submission?</InputLabel>
+                    <Select
+                      id="showResult"
+                      name="showResult"
+                      value={formik.values.showResult}
+                      onChange={formik.handleChange}
+                      label="Show Poll Result After Submission?"
+                    >
+                      <MenuItem value={1}>Yes</MenuItem>
+                      <MenuItem value={0}>No</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel>Do you want to feature the poll in homepage?</InputLabel>
+                    <Select
+                      id="featured"
+                      name="featured"
+                      value={formik.values.featured}
+                      onChange={formik.handleChange}
+                      label="Do you want to feature the poll in homepage?"
+                    >
+                      <MenuItem value={1}>Yes</MenuItem>
+                      <MenuItem value={0}>No</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </>
+            )}
+
             <Grid item xs={12}>
               <Box display="flex" gap={1}>
                 <Button
