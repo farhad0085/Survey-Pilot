@@ -123,6 +123,9 @@ class VoteAPIView(StandardAPIView):
         choice = serializer.validated_data["choice"]
         email = serializer.validated_data.get("email")
 
+        if not poll.can_vote:
+            return self.send_400("Voting is disabled for this poll.")
+
         # we won't let a user submit multiple choice
         # even if he does, we'll just update his choice
         # instead of creating a new one
