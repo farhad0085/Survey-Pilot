@@ -36,7 +36,7 @@ const PollForm = ({ isEdit }) => {
       title: '',
       description: '',
       isActive: true,
-      publishAt: '',
+      publishAt: convertDatetimeForInput(new Date()),
       expireAt: '',
       maxVote: '',
       collectEmail: 1,
@@ -169,12 +169,78 @@ const PollForm = ({ isEdit }) => {
                 theme="snow"
                 value={formik.values.description}
                 onChange={(value) => formik.setFieldValue('description', value)}
-                style={{ height: '200px', marginBottom: '60px' }}
+                style={{ height: '200px', marginBottom: '40px' }}
               />
               {formik.touched.description && formik.errors.description && (
                 <Typography color="error">{formik.errors.description}</Typography>
               )}
             </Grid>
+
+            <Grid item xs={12}>
+              <Typography variant="subtitle1" gutterBottom>
+                Choices
+              </Typography>
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="choices">
+                  {(provided) => (
+                    <Box
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {formik.values.choices.map((choice, index) => (
+                        <Draggable key={index} draggableId={index.toString()} index={index}>
+                          {(provided) => (
+                            <Box
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              key={index}
+                              display="flex"
+                              alignItems="center"
+                              mb={1}
+                              p={1}
+                              border={1}
+                              borderColor="divider"
+                              borderRadius={1}
+                            >
+                              {/* Drag handle icon */}
+                              <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+                                <DragOutlined size={24} />
+                              </Box>
+                              <TextField
+                                fullWidth
+                                value={choice.text}
+                                onChange={(e) => handleChoiceChange(index, e.target.value)}
+                                placeholder={`Choice ${index + 1}`}
+                                inputRef={(ref) => (choiceRefs.current[index] = ref)}
+                              />
+                              <Button
+                                sx={{ ml: 2 }}
+                                variant="outlined"
+                                color="error"
+                                onClick={() => removeChoice(index)}
+                              >
+                                Remove
+                              </Button>
+                            </Box>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </Box>
+                  )}
+                </Droppable>
+              </DragDropContext>
+
+              <Button color='secondary' variant="outlined" size="small" sx={{ mt: 1 }} onClick={addNewChoice}>
+                + Add Choice
+              </Button>
+
+              {formik.errors.choices && (
+                <Typography sx={{ mt: 1 }} color="error">{formik.errors.choices}</Typography>
+              )}
+            </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -260,70 +326,6 @@ const PollForm = ({ isEdit }) => {
                   <MenuItem value={0}>No</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant="subtitle1" gutterBottom>
-                Choices
-              </Typography>
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="choices">
-                  {(provided) => (
-                    <Box
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                    >
-                      {formik.values.choices.map((choice, index) => (
-                        <Draggable key={index} draggableId={index.toString()} index={index}>
-                          {(provided) => (
-                            <Box
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              key={index}
-                              display="flex"
-                              alignItems="center"
-                              mb={1}
-                              p={1}
-                              border={1}
-                              borderColor="divider"
-                              borderRadius={1}
-                            >
-                              {/* Drag handle icon */}
-                              <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-                                <DragOutlined size={24} />
-                              </Box>
-                              <TextField
-                                fullWidth
-                                value={choice.text}
-                                onChange={(e) => handleChoiceChange(index, e.target.value)}
-                                placeholder={`Choice ${index + 1}`}
-                                inputRef={(ref) => (choiceRefs.current[index] = ref)}
-                              />
-                              <Button
-                                sx={{ ml: 2 }}
-                                variant="outlined"
-                                color="error"
-                                onClick={() => removeChoice(index)}
-                              >
-                                Remove
-                              </Button>
-                            </Box>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </Box>
-                  )}
-                </Droppable>
-              </DragDropContext>
-
-              <Button color='secondary' variant="outlined" size="small" sx={{ mt: 1 }} onClick={addNewChoice}>
-                + Add Choice
-              </Button>
-
-              {formik.errors.choices && (
-                <Typography sx={{ mt: 1 }} color="error">{formik.errors.choices}</Typography>
-              )}
             </Grid>
             <Grid item xs={12}>
               <Box display="flex" gap={1}>
