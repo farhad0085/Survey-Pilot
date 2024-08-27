@@ -95,6 +95,13 @@ const PollPage = () => {
                 </Typography>
               </Box>
             )}
+            {!poll.can_vote && (
+              <Box textAlign="center" sx={{ my: 4 }}>
+                <Typography variant="h6" color="textSecondary">
+                  Voting is disabled for this poll.
+                </Typography>
+              </Box>
+            )}
             <Formik
               initialValues={{ choice: '', email: '' }}
               validationSchema={validationSchema}
@@ -113,6 +120,7 @@ const PollPage = () => {
                                 value={choice.id}
                                 control={<Radio />}
                                 label={choice.text}
+                                disabled={!poll.can_vote}
                               />
                             </Grid>
                             <Grid item xs={6}>
@@ -145,6 +153,7 @@ const PollPage = () => {
                           sx={{ mt: 2 }}
                           error={touched.email && Boolean(errors.email)}
                           helperText={touched.email && errors.email}
+                          disabled={!poll.can_vote}
                         />
                       )}
                     </Field>
@@ -154,7 +163,7 @@ const PollPage = () => {
                       variant="contained"
                       color="primary"
                       type="submit"
-                      disabled={isSubmitting || loading}
+                      disabled={isSubmitting || loading || !poll.can_vote}
                       fullWidth
                     >
                       Submit
