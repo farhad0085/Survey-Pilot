@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class Poll(TrackingModel):
     title = models.CharField(max_length=500)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(null=True, blank=True, default=True)
     publish_at = models.DateTimeField(null=True, blank=True, default=timezone.now)
     expire_at = models.DateTimeField(null=True, blank=True)

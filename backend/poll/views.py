@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
+from rest_framework.exceptions import ValidationError
 from common.views import StandardAPIView
 from poll.models import Choice, Poll, Vote
 from poll.paginations import VotePagination
@@ -15,8 +16,20 @@ class PollListCreateAPIView(ListCreateAPIView):
         return Poll.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        choices = self.request.data.pop('choices', [])
+        if len(choices) < 2:
+            raise ValidationError({"choices": "At least two choice is required"})
+        
+        poll = serializer.save(user=self.request.user)
 
+        # create choices
+        for choice in choices:
+            Choice.objects.create(
+                text=choice.get('text'),
+                poll=poll,
+                index=choice.get('index')
+            )
+    
 
 class FeaturedPollListAPIView(ListAPIView):
     serializer_class = PollSerializer

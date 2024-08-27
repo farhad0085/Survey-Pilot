@@ -51,7 +51,7 @@ const PollForm = ({ isEdit }) => {
       maxVote: Yup.number().nullable(),
       choices: Yup.array().of(Yup.object().required('Choice is required')),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setErrors }) => {
       const data = {
         ...values,
         publish_at: (values.publishAt && values.publishAt !== "Invalid date") ? formatTimeToUTC(values.publishAt) : null,
@@ -67,6 +67,7 @@ const PollForm = ({ isEdit }) => {
         showSuccessMessage(`Poll ${isEdit ? 'updated' : 'created'} successfully.`);
       }
       catch (error) {
+        setErrors(error.response?.data)
         showErrorMessage("Couldn't save the changes, please try again later.");
       }
     },
@@ -310,6 +311,10 @@ const PollForm = ({ isEdit }) => {
               <Button color='secondary' variant="outlined" size="small" sx={{ mt: 1 }} onClick={addNewChoice}>
                 + Add Choice
               </Button>
+
+              {formik.errors.choices && (
+                <Typography sx={{ mt: 1 }} color="error">{formik.errors.choices}</Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Box display="flex" gap={1}>
