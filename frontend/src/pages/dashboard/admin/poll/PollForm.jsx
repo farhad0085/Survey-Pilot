@@ -40,6 +40,7 @@ const PollForm = ({ isEdit }) => {
       maxVote: '',
       collectEmail: 1,
       showResult: 1,
+      featured: 0,
       choices: [],
     },
     validationSchema: Yup.object({
@@ -56,8 +57,9 @@ const PollForm = ({ isEdit }) => {
         publish_at: (values.publishAt && values.publishAt !== "Invalid date") ? formatTimeToUTC(values.publishAt) : null,
         expire_at: (values.expireAt && values.expireAt !== "Invalid date") ? formatTimeToUTC(values.expireAt) : null,
         collect_email: values.collectEmail,
-        max_vote: values.maxVote,
+        max_vote: values.maxVote || null,
         show_result: values.showResult,
+        featured: values.featured,
       };
       try {
         const action = isEdit ? updatePoll(pollId, data) : createPoll(data);
@@ -85,6 +87,7 @@ const PollForm = ({ isEdit }) => {
             maxVote: pollDetails.max_vote || '',
             collectEmail: pollDetails.collect_email ? 1 : 0,
             showResult: pollDetails.show_result ? 1 : 0,
+            featured: pollDetails.featured ? 1 : 0,
             choices: pollDetails.choices || [],
           });
           setLoading(false);
@@ -228,6 +231,21 @@ const PollForm = ({ isEdit }) => {
                   value={formik.values.showResult}
                   onChange={formik.handleChange}
                   label="Show Poll Result After Submission?"
+                >
+                  <MenuItem value={1}>Yes</MenuItem>
+                  <MenuItem value={0}>No</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel>Do you want to feature the poll in homepage?</InputLabel>
+                <Select
+                  id="featured"
+                  name="featured"
+                  value={formik.values.featured}
+                  onChange={formik.handleChange}
+                  label="Do you want to feature the poll in homepage?"
                 >
                   <MenuItem value={1}>Yes</MenuItem>
                   <MenuItem value={0}>No</MenuItem>

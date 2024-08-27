@@ -16,6 +16,7 @@ class Poll(TrackingModel):
     user = models.ForeignKey(UserAccount, on_delete=models.SET_NULL, null=True, blank=True)
     collect_email = models.BooleanField("Do you want to collect email?", null=True, blank=True, default=True)
     show_result = models.BooleanField("Show result after vote?", null=True, blank=True, default=True)
+    featured = models.BooleanField("Want to show in homepage?", null=True, blank=True, default=False)
 
     class Meta:
         ordering = ["-created_at"]
