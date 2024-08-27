@@ -20,6 +20,7 @@ class ChoiceSerializer(serializers.ModelSerializer):
 
 class PollSerializer(serializers.ModelSerializer):
     vote_count = serializers.SerializerMethodField()
+    can_vote = serializers.SerializerMethodField()
     choices = serializers.SerializerMethodField()
 
     class Meta:
@@ -29,6 +30,9 @@ class PollSerializer(serializers.ModelSerializer):
 
     def get_vote_count(self, obj):
         return obj.vote_count
+    
+    def get_can_vote(self, obj):
+        return obj.can_vote
 
     def get_choices(self, obj):
         choices = obj.choices.all()

@@ -56,6 +56,7 @@ const PollForm = ({ isEdit }) => {
         publish_at: (values.publishAt && values.publishAt !== "Invalid date") ? formatTimeToUTC(values.publishAt) : null,
         expire_at: (values.expireAt && values.expireAt !== "Invalid date") ? formatTimeToUTC(values.expireAt) : null,
         collect_email: values.collectEmail,
+        max_vote: values.maxVote,
         show_result: values.showResult,
       };
       try {

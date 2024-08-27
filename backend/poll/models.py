@@ -3,6 +3,7 @@ from django.utils import timezone
 from common.models import TrackingModel
 from poll.enums import ChoiceType
 from user.models import UserAccount
+from django.utils import timezone
 
 
 class Poll(TrackingModel):
@@ -22,6 +23,23 @@ class Poll(TrackingModel):
     def __str__(self) -> str:
         return self.title
     
+    @property
+    def is_expired(self):
+        if self.expire_at:
+            return timezone.now() >= self.expire_at
+        return False
+
+    @property
+    def can_vote(self):
+        if not self.is_active:
+            return False
+        if self.is_expired:
+            return False
+        if self.max_vote:
+            if self.vote_count >= self.max_vote:
+                return False
+        return True
+
     @property
     def vote_count(self):
         return self.votes.count()
