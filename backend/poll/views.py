@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from common.views import StandardAPIView
 from poll.models import Choice, Poll, Vote
 from poll.paginations import VotePagination
@@ -16,6 +16,15 @@ class PollListCreateAPIView(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class FeaturedPollListAPIView(ListAPIView):
+    serializer_class = PollSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        polls = Poll.objects.all()
+        return [poll for poll in polls if poll.can_vote]
 
 
 class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

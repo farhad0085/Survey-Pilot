@@ -4,6 +4,10 @@ export const listPoll = async () => {
   return await axios.get(`/api/poll/polls/`, { headers: getHeaders() });
 }
 
+export const listFeaturedPoll = async () => {
+  return await axios.get(`/api/poll/featured-polls/`, { headers: getHeaders() });
+}
+
 export const getPoll = async (pollId) => {
   return await axios.get(`/api/poll/polls/${pollId}/`, { headers: getHeaders() });
 }

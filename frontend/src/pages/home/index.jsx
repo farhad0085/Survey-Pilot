@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DASHBOARD_HOME_PAGE, LOGIN_PAGE, REGISTER_PAGE } from 'routes/urls'
 import { Link } from 'react-router-dom'
 import Typography from '@mui/material/Typography';
@@ -6,13 +6,26 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
+import Paper from '@mui/material/Paper';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import { useAuth } from 'contexts/AuthContext';
+import { listFeaturedPoll } from 'apis/poll';
+import { showErrorMessage } from 'utils/toast';
+import Poll from 'components/poll';
 
 const Home = () => {
 
   const { isAuthenticated } = useAuth()
+  const [polls, setPolls] = useState([])
+
+  useEffect(() => {
+    listFeaturedPoll()
+      .then(res => setPolls(res.data))
+      .catch(error => showErrorMessage("Couldn't load featured polls, please try again later!"))
+  }, [])
+
+  console.log(polls)
 
   return (
     <Container>
@@ -85,6 +98,23 @@ const Home = () => {
           </Card>
         </Grid>
       </Grid>
+
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Featured
+        </Typography>
+
+        <Grid container spacing={4} sx={{ mb: 4 }}>
+          {polls.map(poll => (
+            <Grid item xs={12} md={6}>
+    <Paper sx={{ p: 4, maxWidth: 600, width: '100%' }}>
+
+              <Poll pollData={poll} />
+            </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom>
