@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -29,6 +29,7 @@ const PollForm = ({ isEdit }) => {
   const navigate = useNavigate();
   const { pollId } = useParams();
   const [loading, setLoading] = useState(false);
+  const choiceRefs = useRef([]); // Ref to keep track of the choice input elements
 
   const formik = useFormik({
     initialValues: {
@@ -49,7 +50,7 @@ const PollForm = ({ isEdit }) => {
       publishAt: Yup.date().nullable(),
       expireAt: Yup.date().nullable(),
       maxVote: Yup.number().nullable(),
-      choices: Yup.array().of(Yup.object().required('Choice is required')),
+      choices: Yup.array().of(Yup.object().required('Choice is required')).min(2, 'At least 2 choices are required'),
     }),
     onSubmit: async (values, { setErrors }) => {
       const data = {
@@ -113,6 +114,13 @@ const PollForm = ({ isEdit }) => {
 
   const addNewChoice = () => {
     formik.setFieldValue('choices', [...formik.values.choices, {}]);
+
+    // Focus on the new choice input field
+    setTimeout(() => {
+      if (choiceRefs.current[formik.values.choices.length]) {
+        choiceRefs.current[formik.values.choices.length].focus();
+      }
+    }, 0);
   };
 
   const removeChoice = (index) => {
@@ -289,6 +297,7 @@ const PollForm = ({ isEdit }) => {
                                 value={choice.text}
                                 onChange={(e) => handleChoiceChange(index, e.target.value)}
                                 placeholder={`Choice ${index + 1}`}
+                                inputRef={(ref) => (choiceRefs.current[index] = ref)}
                               />
                               <Button
                                 sx={{ ml: 2 }}
