@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getPoll, getPollAnalytics } from '../../../../apis/poll';
+import { getPoll } from '../../../../apis/poll';
 import { showErrorMessage } from 'utils/toast';
 import MainCard from 'components/MainCard';
 import {
@@ -23,9 +23,7 @@ import AnalyticsTable from './PollAnalytics';
 const PollResultPage = () => {
   const { pollId } = useParams();
   const [poll, setPoll] = useState(null);
-  const [analytics, setAnalytics] = useState({});
   const [loading, setLoading] = useState(false);
-  const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -37,17 +35,6 @@ const PollResultPage = () => {
       .catch(error => {
         setLoading(false);
         showErrorMessage("Couldn't load poll data, please try again later!");
-      });
-
-    setAnalyticsLoading(true);
-    getPollAnalytics(pollId)
-      .then(res => {
-        setAnalytics(res.data);
-        setAnalyticsLoading(false);
-      })
-      .catch(error => {
-        setAnalyticsLoading(false);
-        showErrorMessage("Couldn't load analytical data, please try again later!");
       });
   }, [pollId]);
 
@@ -130,7 +117,7 @@ const PollResultPage = () => {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-         <AnalyticsTable analytics={analytics} analyticsLoading={analyticsLoading} />
+         <AnalyticsTable pollId={pollId} />
         </Grid>
       </Grid>
     </>

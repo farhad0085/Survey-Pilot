@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -14,10 +14,14 @@ import {
 } from '@mui/material';
 import UAParser from 'ua-parser-js'
 import moment from 'moment'
+import { getPollAnalytics } from 'apis/poll';
+import { showErrorMessage } from 'utils/toast';
 
-const AnalyticsTable = ({ analyticsLoading, analytics }) => {
+const AnalyticsTable = ({ pollId }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Adjust rows per page as needed
+  const [analytics, setAnalytics] = useState({});
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -34,6 +38,19 @@ const AnalyticsTable = ({ analyticsLoading, analytics }) => {
     const uaParser = UAParser(userAgent)
     return uaParser.browser.name
   }
+
+  useEffect(() => {
+    setAnalyticsLoading(true);
+    getPollAnalytics(pollId)
+      .then(res => {
+        setAnalytics(res.data);
+        setAnalyticsLoading(false);
+      })
+      .catch(error => {
+        setAnalyticsLoading(false);
+        showErrorMessage("Couldn't load analytical data, please try again later!");
+      });
+  }, [pollId])
 
   return (
     <>
@@ -58,7 +75,7 @@ const AnalyticsTable = ({ analyticsLoading, analytics }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paginatedVotes.map(vote => (
+                {paginatedVotes?.map(vote => (
                   <TableRow key={vote.id}>
                     <TableCell>{vote.email || "-"}</TableCell>
                     <TableCell>{vote.ip_address}</TableCell>
@@ -73,7 +90,7 @@ const AnalyticsTable = ({ analyticsLoading, analytics }) => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={analytics.votes.length}
+            count={analytics.votes?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
