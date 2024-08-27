@@ -12,8 +12,8 @@ import {
   Paper,
   TablePagination
 } from '@mui/material';
-import UAParser from 'ua-parser-js'
-import moment from 'moment'
+import UAParser from 'ua-parser-js';
+import moment from 'moment';
 import { getPollAnalytics } from 'apis/poll';
 import { showErrorMessage } from 'utils/toast';
 
@@ -21,6 +21,7 @@ const AnalyticsTable = ({ pollId }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Adjust rows per page as needed
   const [analytics, setAnalytics] = useState({});
+  const [totalRecords, setTotalRecords] = useState(0);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
   const handleChangePage = (event, newPage) => {
@@ -32,25 +33,24 @@ const AnalyticsTable = ({ pollId }) => {
     setPage(0); // Reset to first page on rows per page change
   };
 
-  const paginatedVotes = analytics.votes?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
   const getBrowserDetails = (userAgent) => {
-    const uaParser = UAParser(userAgent)
-    return uaParser.browser.name
-  }
+    const uaParser = UAParser(userAgent);
+    return uaParser.browser.name;
+  };
 
   useEffect(() => {
     setAnalyticsLoading(true);
-    getPollAnalytics(pollId)
+    getPollAnalytics(pollId, page + 1, rowsPerPage) // Assuming the API uses 1-based page index
       .then(res => {
         setAnalytics(res.data);
+        setTotalRecords(res.data.votes?.total_count); // Assuming the API response contains total record count
         setAnalyticsLoading(false);
       })
       .catch(error => {
         setAnalyticsLoading(false);
         showErrorMessage("Couldn't load analytical data, please try again later!");
       });
-  }, [pollId])
+  }, [pollId, page, rowsPerPage]);
 
   return (
     <>
@@ -75,7 +75,7 @@ const AnalyticsTable = ({ pollId }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paginatedVotes?.map(vote => (
+                {analytics?.votes?.data?.map(vote => (
                   <TableRow key={vote.id}>
                     <TableCell>{vote.email || "-"}</TableCell>
                     <TableCell>{vote.ip_address}</TableCell>
@@ -88,9 +88,9 @@ const AnalyticsTable = ({ pollId }) => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25, 50, 100]}
             component="div"
-            count={analytics.votes?.length}
+            count={totalRecords}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

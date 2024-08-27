@@ -3,6 +3,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
 from common.views import StandardAPIView
 from poll.models import Choice, Poll, Vote
+from poll.paginations import VotePagination
 from poll.permissions import IsPollOwner
 from poll.serializers import ChoiceSerializer, PollSerializer, VoteSerializer
 
@@ -65,13 +66,28 @@ class PollVoteRetrieveAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         poll_obj = self.get_object()
-        votes = list(poll_obj.votes.all().values('id', 'email', 'ip_address', 'user_agent', 'choice', 'updated_at').distinct())
 
-        # add choice's serialized data
-        get_vote_obj = lambda vote: Choice.objects.get(id=vote['choice'])
-        votes = [{**vote, 'choice': ChoiceSerializer(get_vote_obj(vote)).data} for vote in votes]
+        # Apply pagination
+        paginator = VotePagination()
+        paginated_votes = paginator.paginate_queryset(poll_obj.votes.all(), request)
+
+        # serialize votes data
+        votes = [{
+            "id": v.id,
+            "email": v.email,
+            "ip_address": v.ip_address,
+            "user_agent": v.user_agent,
+            "choice": ChoiceSerializer(v.choice).data,
+            "updated_at": v.updated_at
+        } for v in paginated_votes]
+
         data = {
-            "votes": votes
+            "votes": {
+                "total_count": paginator.page.paginator.count,
+                "current_page": paginator.page.number,
+                "page_size": paginator.page.paginator.per_page,
+                "data": votes
+            }
         }
         return Response(data)
 

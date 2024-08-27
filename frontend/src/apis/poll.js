@@ -20,6 +20,6 @@ export const submitPoll = async (pollId, pollData) => {
   return await axios.post(`/api/poll/vote/`, pollData);
 }
 
-export const getPollAnalytics = async (pollId) => {
-  return await axios.get(`/api/poll/polls/${pollId}/analytics`, { headers: getHeaders() });
+export const getPollAnalytics = async (pollId, page, pageSize) => {
+  return await axios.get(`/api/poll/polls/${pollId}/analytics?page=${page}&page_size=${pageSize}`, { headers: getHeaders() });
 }
