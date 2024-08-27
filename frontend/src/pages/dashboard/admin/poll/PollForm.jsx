@@ -138,6 +138,10 @@ const PollForm = ({ isEdit }) => {
     const [movedItem] = items.splice(source.index, 1);
     items.splice(destination.index, 0, movedItem);
 
+    // reset item's index
+    items.forEach((item, index) => {
+      item.index = index
+    })
     formik.setFieldValue('choices', items);
   };
 
