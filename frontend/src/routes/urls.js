@@ -17,8 +17,8 @@ export const RESULT_POLL_PAGE = "/dashboard/poll/:pollId"
 
 // surveys
 export const LIST_SURVEY_PAGE = "/dashboard/surveys"
-export const CREATE_SURVEY_PAGE = "/dashboard/create-surveys"
-export const UPDATE_SURVEY_PAGE = "/dashboard/update-surveys/:surveyId"
+export const CREATE_SURVEY_PAGE = "/dashboard/survey/create"
+export const UPDATE_SURVEY_PAGE = "/dashboard/survey/:surveyId/update"
 
 // users
 export const LIST_USER_PAGE = "/dashboard/users"

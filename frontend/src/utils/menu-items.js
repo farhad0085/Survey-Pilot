@@ -3,7 +3,7 @@ import {
   BarsOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { CREATE_POLL_PAGE, DASHBOARD_HOME_PAGE, LIST_POLL_PAGE } from 'routes/urls';
+import * as URLS from 'routes/urls';
 
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -19,7 +19,7 @@ const menuItems = {
           id: 'dashboard',
           title: 'Dashboard',
           type: 'item',
-          url: DASHBOARD_HOME_PAGE,
+          url: URLS.DASHBOARD_HOME_PAGE,
           icon: DashboardOutlined,
           breadcrumbs: false,
           showBreadcrumbTitle: true
@@ -35,7 +35,7 @@ const menuItems = {
           id: 'list-poll',
           title: 'Polls',
           type: 'item',
-          url: LIST_POLL_PAGE,
+          url: URLS.LIST_POLL_PAGE,
           icon: BarsOutlined,
           showBreadcrumbTitle: false
         },
@@ -43,7 +43,30 @@ const menuItems = {
           id: 'create-poll',
           title: 'Create new poll',
           type: 'item',
-          url: CREATE_POLL_PAGE,
+          url: URLS.CREATE_POLL_PAGE,
+          icon: PlusOutlined,
+          showBreadcrumbTitle: false
+        }
+      ]
+    },
+    {
+      id: 'survey',
+      title: 'Survey',
+      type: 'group',
+      children: [
+        {
+          id: 'list-survey',
+          title: 'Surveys',
+          type: 'item',
+          url: URLS.LIST_SURVEY_PAGE,
+          icon: BarsOutlined,
+          showBreadcrumbTitle: false
+        },
+        {
+          id: 'create-survey',
+          title: 'Create new survey',
+          type: 'item',
+          url: URLS.CREATE_SURVEY_PAGE,
           icon: PlusOutlined,
           showBreadcrumbTitle: false
         }
