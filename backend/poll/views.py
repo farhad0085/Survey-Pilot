@@ -4,13 +4,14 @@ from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpda
 from rest_framework.exceptions import ValidationError
 from common.views import StandardAPIView
 from poll.models import Choice, Poll, Vote
-from poll.paginations import VotePagination
+from poll.paginations import PollPagination, VotePagination
 from poll.permissions import IsPollOwner
 from poll.serializers import ChoiceSerializer, PollSerializer, VoteSerializer
 
 
 class PollListCreateAPIView(ListCreateAPIView):
     serializer_class = PollSerializer
+    pagination_class = PollPagination
 
     def get_queryset(self):
         return Poll.objects.filter(user=self.request.user)
@@ -37,7 +38,7 @@ class FeaturedPollListAPIView(ListAPIView):
 
     def get_queryset(self):
         polls = Poll.objects.all()
-        return [poll for poll in polls if poll.can_vote]
+        return [poll for poll in polls if poll.can_vote][:10]
 
 
 class PollRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):

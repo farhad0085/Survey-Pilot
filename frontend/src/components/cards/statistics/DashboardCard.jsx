@@ -36,7 +36,5 @@ DashboardCard.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
   count: PropTypes.string,
-  percentage: PropTypes.number,
-  isLoss: PropTypes.bool,
-  extra: PropTypes.string
+  activeCount: PropTypes.string
 };

@@ -1,7 +1,7 @@
 import axios, { getHeaders } from '../utils/axios';
 
-export const listPoll = async () => {
-  return await axios.get(`/api/poll/polls/`, { headers: getHeaders() });
+export const listPoll = async (page, pageSize) => {
+  return await axios.get(`/api/poll/polls/?page=${page}&page_size=${pageSize}`, { headers: getHeaders() });
 }
 
 export const listFeaturedPoll = async () => {
