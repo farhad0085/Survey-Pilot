@@ -1,0 +1,13 @@
+from common.enums import BaseEnum
+
+
+class QuestionType(BaseEnum):
+    SHORT_ANSWER = 'SHORT_ANSWER'
+    PARAGRAPH = 'PARAGRAPH'
+    MULTIPLE_CHOICE = 'MULTIPLE_CHOICE'
+    DROPDOWN = 'DROPDOWN'
+    CHECKBOX = 'CHECKBOX'
+    FILE_UPLOAD = 'FILE_UPLOAD'
+    LINEAR_SCALE = 'LINEAR_SCALE'
+    DATE = 'DATE'
+    TIME = 'TIME'
