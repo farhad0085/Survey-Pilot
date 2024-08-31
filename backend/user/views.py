@@ -102,13 +102,24 @@ class DashboardAPIview(StandardAPIView):
 
     def get(self, request):
         # get polls created by the user
-        poll_count = Poll.objects.filter(user=request.user).count()
+        polls = Poll.objects.filter(user=request.user)
+        total_poll_count = polls.count()
+        active_poll_count = len([poll for poll in polls if poll.can_vote])
         
         data = {
             "cards": {
-                "polls": poll_count,
-                "surveys": 2,
-                "users": 6,
+                "polls": {
+                    "total": total_poll_count,
+                    "active": active_poll_count,
+                },
+                "surveys": {
+                    "total": total_poll_count,
+                    "active": active_poll_count,
+                },
+                "users": {
+                    "total": total_poll_count,
+                    "active": active_poll_count,
+                },
             }
         }
         return self.send_200(data)
