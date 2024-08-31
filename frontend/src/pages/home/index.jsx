@@ -25,8 +25,6 @@ const Home = () => {
       .catch(error => showErrorMessage("Couldn't load featured polls, please try again later!"))
   }, [])
 
-  console.log(polls)
-
   return (
     <Container>
       <Box sx={{ textAlign: 'center', my: 4 }}>
@@ -99,22 +97,23 @@ const Home = () => {
         </Grid>
       </Grid>
 
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Featured
-        </Typography>
+      {polls?.length > 0 && (
+        <Box sx={{ mb: 4 }}>
+          <Typography variant="h4" gutterBottom>
+            Featured
+          </Typography>
 
-        <Grid container spacing={4} sx={{ mb: 4 }}>
-          {polls.map(poll => (
-            <Grid item xs={12} md={6}>
-    <Paper sx={{ p: 4, maxWidth: 600, width: '100%' }}>
-
-              <Poll pollData={poll} />
-            </Paper>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
+          <Grid container spacing={4} sx={{ mb: 4 }}>
+            {polls.map(poll => (
+              <Grid item xs={12} md={6}>
+                <Paper sx={{ p: 4, maxWidth: 600, width: '100%' }}>
+                  <Poll pollData={poll} />
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
 
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" gutterBottom>

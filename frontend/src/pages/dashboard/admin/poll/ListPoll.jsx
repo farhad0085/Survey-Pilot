@@ -81,7 +81,7 @@ const ListPollPage = () => {
                   <TableCell>{item.max_vote || 'N/A'}</TableCell>
                   <TableCell>{item.publish_at ? moment(item.publish_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>{item.expire_at ? moment(item.expire_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
-                  <TableCell>{item.is_active ? 'Active' : 'Closed'}</TableCell>
+                  <TableCell>{item.can_vote ? 'Active' : 'Closed'}</TableCell>
                   <TableCell>{item.updated_at ? moment(item.updated_at).format('DD-MM-YYYY hh:mm a') : '-'}</TableCell>
                   <TableCell>
                     <Button
