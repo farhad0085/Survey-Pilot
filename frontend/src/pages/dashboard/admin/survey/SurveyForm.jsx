@@ -284,7 +284,7 @@ const SurveyForm = ({ isEdit }) => {
                                   </Grid>
                                 </Grid>
 
-                                {['MULTIPLE_CHOICE', "CHECKBOX"].includes(question.question_type) && (
+                                {['MULTIPLE_CHOICE', "DROPDOWN", "CHECKBOX"].includes(question.question_type) && (
                                   <Box mt={2}>
                                     <DragDropContext onDragEnd={(result) => onOptionsDragEnd(result, questionIndex)}>
                                       <Droppable droppableId={`droppable-${questionIndex}`}>
